@@ -5,7 +5,7 @@ const HOMOGLYPHS: Record<string, string> = {
   "а": "a", "в": "b", "е": "e", "к": "k", "м": "m", "н": "h", "о": "o", "р": "p", "с": "c",
   "т": "t", "у": "y", "х": "x", "і": "i", "ј": "j", "ѕ": "s", "ԁ": "d", "ɡ": "g", "ӏ": "l",
   // Greek
-  "α": "a", "β": "b", "ε": "e", "ι": "i", "κ": "k", "ν": "v", "ο": "o", "ρ": "p", "τ": "t", "υ": "u", "χ": "x",
+  "α": "a", "β": "b", "ε": "e", "η": "h", "ι": "i", "κ": "k", "ν": "v", "ο": "o", "ρ": "p", "τ": "t", "υ": "u", "χ": "x",
 };
 
 // Applied after lower-casing, to both sides of a comparison.
@@ -56,18 +56,18 @@ export function skeleton(s: string): string {
   return out;
 }
 
+// Optimal string alignment distance: like Levenshtein, but swapping two neighbouring
+// letters ("Kahn" for "Khan") counts as one edit, because that's how people misread names.
 export function editDistance(a: string, b: string): number {
-  const dp = Array.from({ length: b.length + 1 }, (_, i) => i);
+  const d: number[][] = Array.from({ length: a.length + 1 }, (_, i) => Array.from({ length: b.length + 1 }, (_, j) => (i === 0 ? j : j === 0 ? i : 0)));
   for (let i = 1; i <= a.length; i++) {
-    let prev = dp[0];
-    dp[0] = i;
     for (let j = 1; j <= b.length; j++) {
-      const tmp = dp[j];
-      dp[j] = Math.min(dp[j] + 1, dp[j - 1] + 1, prev + (a[i - 1] === b[j - 1] ? 0 : 1));
-      prev = tmp;
+      const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+      d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + cost);
+      if (i > 1 && j > 1 && a[i - 1] === b[j - 2] && a[i - 2] === b[j - 1]) d[i][j] = Math.min(d[i][j], d[i - 2][j - 2] + 1);
     }
   }
-  return dp[b.length];
+  return d[a.length][b.length];
 }
 
 export function jaroWinkler(a: string, b: string): number {
@@ -147,8 +147,8 @@ export function domainLooksLike(candidate: string, knownDomains: string[]): stri
     // Same name on a different TLD (acme.co vs acme.com).
     if (cb === kb) return k;
     if (looksLike(cb.replace(/[-.]/g, " "), kb.replace(/[-.]/g, " "))) return k;
-    // acme-payments.com imitating acme.com
-    if (kb.length >= 4 && cb.replace(/[-.]/g, "").startsWith(kb) && cb !== kb) return k;
+    // acme-payments.com or acme.billing.com imitating acme.com (but not acmelabs.com, a different brand)
+    if (kb.length >= 4 && (cb.startsWith(kb + "-") || cb.startsWith(kb + "."))) return k;
   }
   return null;
 }

@@ -78,11 +78,17 @@ function normInvoiceNo(s: string): string {
   return s.toLowerCase().replace(/[^a-z0-9]/g, "").replace(/^([a-z]*)0+/, "$1");
 }
 
-// "INV-1042" vs "INV-1042-A": same number with letters changed, a re-sent copy.
+// The invoice's main number: its longest run of digits, without leading zeros.
+function mainNumber(raw: string): string {
+  const groups = raw.match(/\d+/g) ?? [];
+  return groups.reduce((best, g) => (g.replace(/^0+/, "").length > best.length ? g.replace(/^0+/, "") : best), "");
+}
+
+// "INV-1042" vs "INV-1042-A" or "INV-1042/1": same main number, decorated differently, a re-sent copy.
 // "H-10" vs "H-11" is just the next invoice in sequence, so it doesn't count.
-function isAlteredCopy(a: string, b: string): boolean {
-  const digits = (s: string) => s.replace(/\D/g, "").replace(/^0+/, "");
-  return a !== b && digits(a) !== "" && digits(a) === digits(b) && editDistance(a, b) <= 2;
+function isAlteredCopy(rawA: string, rawB: string): boolean {
+  const a = mainNumber(rawA);
+  return a.length >= 3 && a === mainNumber(rawB) && normInvoiceNo(rawA) !== normInvoiceNo(rawB);
 }
 
 export function r3Duplicate(ctx: RuleContext): Flag | null {
@@ -105,7 +111,7 @@ export function r3Duplicate(ctx: RuleContext): Flag | null {
     }
     const ageDays = (now.getTime() - o.createdAt.getTime()) / DAY;
     if (o.amount === intent.amount && o.currency === intent.currency && ageDays <= thresholds.duplicateWindowDays) {
-      if (inv && oInv && isAlteredCopy(inv, oInv)) {
+      if (intent.invoiceNumber && o.invoiceNumber && isAlteredCopy(intent.invoiceNumber, o.invoiceNumber)) {
         return {
           ruleId: "R3",
           severity: "red",
@@ -191,7 +197,11 @@ export function r6NewPayee(ctx: RuleContext): Flag | null {
 export function r7Pressure(ctx: RuleContext): Flag | null {
   const s = ctx.signals;
   if (!s) return null;
-  const risky = !ctx.payee?.firstPaidAt || s.paymentDetailsChange || r1PayoutChanged(ctx) !== null;
+  return pressureFlag(s, !ctx.payee?.firstPaidAt || s.paymentDetailsChange || r1PayoutChanged(ctx) !== null);
+}
+
+// `risky`: the money would go somewhere new or changed.
+export function pressureFlag(s: MessageSignals, risky: boolean): Flag | null {
   const count = [s.urgency, s.authorityClaim, s.secrecyRequest, s.offChannelRequest, s.paymentDetailsChange].filter(Boolean).length;
   const named = s.claimedSender ? ` claiming to be ${s.claimedSender}` : "";
   const traits = [
@@ -295,4 +305,12 @@ export const PAYMENT_RULES = [
 
 export function evaluatePayment(ctx: RuleContext): Flag[] {
   return PAYMENT_RULES.map((rule) => rule(ctx)).filter((f): f is Flag => f !== null);
+}
+
+// Scam inbox: a message on its own, with no payment attached yet.
+export function evaluateMessage(signals: MessageSignals, contacts: MessageContacts, allPayees: PayeeRecord[]): Flag[] {
+  return [
+    contactMismatch(contacts, signals.claimedSender, allPayees),
+    pressureFlag(signals, signals.paymentDetailsChange || signals.offChannelRequest),
+  ].filter((f): f is Flag => f !== null);
 }

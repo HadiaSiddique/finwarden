@@ -16,6 +16,15 @@ Decisions, deviations from the build brief, and things a judge might trip over.
 - **R3 duplicates:** an invoice with the *same number but changed letters* (INV-1042 vs INV-1042-A) is a red flag. A different number is never treated as a duplicate on its own, because sequential numbers (H-10, H-11) are how normal retainers look. Same payee + same amount within 7 days is an amber "possible double payment" warning.
 - **R2 lookalikes:** name identity keeps homoglyphs, so "Аcme" (Cyrillic А) counts as a different name from "Acme" and is caught by the visual-skeleton check.
 
+## Eval history (rules mode, 158 synthetic cases, test split frozen by seed)
+
+| Run | Change | Test catch rate | Test false-alarm rate |
+|---|---|---|---|
+| 1 (Nov 9) | First run, rules written before the cases existed | 92.9% (13/14) | 2.9% (1/34) |
+| 2 (Nov 9) | Fixes driven by train-split misses: invoice numbers like "INV-2183/1" count as copies; swapped letters ("Kahn"/"Khan") count as one edit; domain imitation needs a separator ("acme-pay.com", not "acmelabs.com") | 100% (14/14) | 0% (0/34) |
+
+**Caveat for the README:** the same author wrote the rules and the cases, so run 2 overstates real-world performance. Quote run 1 as the honest first measurement, and add cases written by someone else (or AI-extracted signals in full mode) before claiming more.
+
 ## Sponsor trial expiry dates
 
 Fill in when claimed. Judging ends Dec 15, 2026.

@@ -1,0 +1,3552 @@
+[
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Acme Ltd",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 69500,
+      "invoiceNumber": "R-104"
+    },
+    "id": "c001",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Acme Ltd",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 50400,
+      "invoiceNumber": "R-123"
+    },
+    "id": "c002",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "monthly_retainer",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Retainer PrintHub, next invoice in sequence",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 50000,
+      "invoiceNumber": "RT-201"
+    },
+    "history": [
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 50000,
+        "invoiceNumber": "RT-200",
+        "hoursAgo": 720
+      }
+    ],
+    "id": "c003",
+    "split": "test"
+  },
+  {
+    "label": "scam",
+    "pattern": "lookalike_domain",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Acme Ltd paid to billing@acme-payments.com",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 62100,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "billing@acme-payments.com",
+        "currency": "USD"
+      }
+    },
+    "id": "c004",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to PrintHub",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 54700,
+      "invoiceNumber": "R-115"
+    },
+    "id": "c005",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "paypal_invoice_phone",
+    "lang": "en",
+    "kind": "message",
+    "description": "PayPal-branded invoice with a call-back number",
+    "message": "PayPal: Your account will be charged £299. Not you? Call our fraud team on +44 20 5550 1234.",
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PayPal"
+    },
+    "contacts": {
+      "phones": [
+        "+44 20 5550 1234"
+      ],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c006",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "small_repeat_payments",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Two small payments to PrintHub",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 24700,
+      "invoiceNumber": "SM-7-2"
+    },
+    "history": [
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 31300,
+        "invoiceNumber": "SM-7-1",
+        "hoursAgo": 55
+      }
+    ],
+    "id": "c007",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "lookalike_domain",
+    "lang": "en",
+    "kind": "payment",
+    "description": "PrintHub paid to pay@printhub-invoices.io",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 59900,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "pay@printhub-invoices.io",
+        "currency": "USD"
+      }
+    },
+    "id": "c008",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "monthly_retainer",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Retainer Hamza Khan, next invoice in sequence",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 50000,
+      "invoiceNumber": "RT-250"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 50000,
+        "invoiceNumber": "RT-249",
+        "hoursAgo": 696
+      }
+    ],
+    "id": "c009",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "lookalike_domain",
+    "lang": "en",
+    "kind": "payment",
+    "description": "PrintHub paid to pay@printhub.co",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 46900,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "pay@printhub.co",
+        "currency": "USD"
+      }
+    },
+    "id": "c010",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "duplicate_invoice",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Invoice INV-7812 re-submitted as INV-7812B",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 27700,
+      "invoiceNumber": "INV-7812B"
+    },
+    "history": [
+      {
+        "payeeId": "acme",
+        "payeeName": "Acme Ltd",
+        "amount": 27700,
+        "invoiceNumber": "INV-7812",
+        "hoursAgo": 600
+      }
+    ],
+    "id": "c011",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "hurried_known_payee",
+    "lang": "en",
+    "kind": "payment",
+    "description": "PrintHub asks for payment today (en)",
+    "message": "Hi Sara, could you pay invoice R-88 today? We're closing our books tonight. Thanks!",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 47500,
+      "invoiceNumber": "H-0"
+    },
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PrintHub"
+    },
+    "id": "c012",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "verified_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "PrintHub paid to details verified 2+ weeks ago",
+    "payeeOverride": {
+      "verifiedPayout": {
+        "method": "paypal_email",
+        "receiver": "new-1@printhub.io",
+        "currency": "USD"
+      },
+      "payoutVerifiedAt": "2026-10-26T09:00:00.000Z"
+    },
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 24400,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "new-1@printhub.io",
+        "currency": "USD"
+      }
+    },
+    "id": "c013",
+    "split": "test"
+  },
+  {
+    "label": "scam",
+    "pattern": "duplicate_invoice",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Invoice INV-2183 re-submitted as INV-2183/1",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 52800,
+      "invoiceNumber": "INV-2183/1"
+    },
+    "history": [
+      {
+        "payeeId": "acme",
+        "payeeName": "Acme Ltd",
+        "amount": 52800,
+        "invoiceNumber": "INV-2183",
+        "hoursAgo": 400
+      }
+    ],
+    "id": "c014",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to PrintHub",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 69300,
+      "invoiceNumber": "R-113"
+    },
+    "id": "c015",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "paypal_invoice_phone",
+    "lang": "ur",
+    "kind": "message",
+    "description": "PayPal-branded invoice with a call-back number",
+    "message": "پے پال انوائس: 700 ڈالر کی ادائیگی۔ اگر یہ آپ نے نہیں کی تو فوراً +92 21 555 0100 پر کال کریں۔",
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PayPal"
+    },
+    "contacts": {
+      "phones": [
+        "+92 21 555 0100"
+      ],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c016",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "payroll_diversion",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Employee pay redirected days before payday",
+    "now": "2026-11-13T09:00:00Z",
+    "intent": {
+      "payeeId": "omar",
+      "payeeName": "Omar Siddiq",
+      "amount": 300000,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "omar.siddiq3@example.net",
+        "currency": "USD"
+      }
+    },
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": true,
+      "claimedSender": "Omar Siddiq"
+    },
+    "id": "c017",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "verified_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Hamza Khan paid to details verified 2+ weeks ago",
+    "payeeOverride": {
+      "verifiedPayout": {
+        "method": "paypal_email",
+        "receiver": "new-0@example.com",
+        "currency": "USD"
+      },
+      "payoutVerifiedAt": "2026-10-27T09:00:00.000Z"
+    },
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 69700,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "new-0@example.com",
+        "currency": "USD"
+      }
+    },
+    "id": "c018",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "normal_payroll",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Payroll to long-verified details",
+    "now": "2026-11-11T09:00:00Z",
+    "intent": {
+      "payeeId": "omar",
+      "payeeName": "Omar Siddiq",
+      "amount": 300000
+    },
+    "id": "c019",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "bank_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Hamza Khan payment redirected to khan.hamza.pay@example.org",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 26000,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "khan.hamza.pay@example.org",
+        "currency": "USD"
+      },
+      "invoiceNumber": "INV-37"
+    },
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": true,
+      "claimedSender": "Hamza Khan"
+    },
+    "id": "c020",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "supplier_own_contacts",
+    "lang": "en",
+    "kind": "message",
+    "description": "Message from PrintHub with known contacts",
+    "message": "PrintHub: order shipped. Billing questions: +1 212 555 0199 or pay@printhub.io",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PrintHub"
+    },
+    "contacts": {
+      "phones": [
+        "+1 212 555 0199"
+      ],
+      "emails": [
+        "pay@printhub.io"
+      ],
+      "urls": []
+    },
+    "id": "c021",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "supplier_own_contacts",
+    "lang": "en",
+    "kind": "message",
+    "description": "Message from PrintHub with known contacts",
+    "message": "PrintHub order 5531 is ready: https://printhub.io/orders/5531",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PrintHub"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [],
+      "urls": [
+        "https://printhub.io/orders/5531"
+      ]
+    },
+    "id": "c022",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "small_repeat_payments",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Two small payments to Hamza Khan",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 12000,
+      "invoiceNumber": "SM-3-2"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 32500,
+        "invoiceNumber": "SM-3-1",
+        "hoursAgo": 35
+      }
+    ],
+    "id": "c023",
+    "split": "test"
+  },
+  {
+    "label": "scam",
+    "pattern": "bank_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Acme Ltd payment redirected to remit@acme.example.co",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 72500,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "remit@acme.example.co",
+        "currency": "USD"
+      },
+      "invoiceNumber": "INV-44"
+    },
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": true,
+      "claimedSender": "Acme Ltd"
+    },
+    "id": "c024",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "hurried_known_payee",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Hamza Khan asks for payment today (en)",
+    "message": "Quick one: can you send this today? Same account as always.",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 16200,
+      "invoiceNumber": "H-8"
+    },
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Hamza Khan"
+    },
+    "id": "c025",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "bank_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Acme Ltd payment redirected to payments@acme-finance.example",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 70600,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "payments@acme-finance.example",
+        "currency": "USD"
+      },
+      "invoiceNumber": "INV-41"
+    },
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": true,
+      "claimedSender": "Acme Ltd"
+    },
+    "id": "c026",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "genuine_paypal_notice",
+    "lang": "es",
+    "kind": "message",
+    "description": "PayPal notification without call-back number",
+    "message": "PayPal: Recibiste un pago de $1,200.00 USD de Nova Apps.",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PayPal"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c027",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "supplier_contact_mismatch",
+    "lang": "en",
+    "kind": "message",
+    "description": "Message as Acme Ltd with unknown contact",
+    "message": "Acme Ltd here, please call our new accounts line +1 415 555 9999 to confirm payment.",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Acme Ltd"
+    },
+    "contacts": {
+      "phones": [
+        "+1 415 555 9999"
+      ],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c028",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "monthly_retainer",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Retainer PrintHub, next invoice in sequence",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 50000,
+      "invoiceNumber": "RT-229"
+    },
+    "history": [
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 50000,
+        "invoiceNumber": "RT-228",
+        "hoursAgo": 696
+      }
+    ],
+    "id": "c029",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "ceo_impersonation",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Urgent \"boss\" request to a new account (en)",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Global Consulting LLC",
+      "amount": 981100
+    },
+    "message": "Sara here. I'm in a meeting, can't talk. Pay $9,500 to Global Consulting today, it's urgent and confidential. Don't tell Omar.",
+    "signals": {
+      "urgency": true,
+      "authorityClaim": true,
+      "secrecyRequest": true,
+      "offChannelRequest": true,
+      "paymentDetailsChange": false,
+      "claimedSender": "Sara (CEO)"
+    },
+    "id": "c030",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Acme Ltd",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 79800,
+      "invoiceNumber": "R-122"
+    },
+    "id": "c031",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "normal_payroll",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Payroll to long-verified details",
+    "now": "2026-11-11T09:00:00Z",
+    "intent": {
+      "payeeId": "omar",
+      "payeeName": "Omar Siddiq",
+      "amount": 300000
+    },
+    "id": "c032",
+    "split": "test"
+  },
+  {
+    "label": "scam",
+    "pattern": "duplicate_invoice",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Invoice INV-1388 re-submitted as INV-1388/1",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 53700,
+      "invoiceNumber": "INV-1388/1"
+    },
+    "history": [
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 53700,
+        "invoiceNumber": "INV-1388",
+        "hoursAgo": 200
+      }
+    ],
+    "id": "c033",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to PrintHub",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 59000,
+      "invoiceNumber": "R-106"
+    },
+    "id": "c034",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "bank_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "PrintHub payment redirected to pay@printhub-billing.example",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 22700,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "pay@printhub-billing.example",
+        "currency": "USD"
+      },
+      "invoiceNumber": "INV-68"
+    },
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": true,
+      "claimedSender": "PrintHub"
+    },
+    "id": "c035",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "ceo_impersonation",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Urgent \"boss\" request to a new account (en)",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Global Consulting LLC",
+      "amount": 653700
+    },
+    "message": "Omar, the CEO asked me to get this paid now. New vendor, details attached. Please don't delay.",
+    "signals": {
+      "urgency": true,
+      "authorityClaim": true,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "the CEO"
+    },
+    "id": "c036",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "monthly_retainer",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Retainer Hamza Khan, next invoice in sequence",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 50000,
+      "invoiceNumber": "RT-271"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 50000,
+        "invoiceNumber": "RT-270",
+        "hoursAgo": 744
+      }
+    ],
+    "id": "c037",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Hamza Khan",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 19500,
+      "invoiceNumber": "R-117"
+    },
+    "id": "c038",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "monthly_retainer",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Retainer Hamza Khan, next invoice in sequence",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 50000,
+      "invoiceNumber": "RT-243"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 50000,
+        "invoiceNumber": "RT-242",
+        "hoursAgo": 720
+      }
+    ],
+    "id": "c039",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "bank_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "PrintHub payment redirected to finance@print-hub.example",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 31000,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "finance@print-hub.example",
+        "currency": "USD"
+      },
+      "invoiceNumber": "INV-25"
+    },
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": true,
+      "claimedSender": "PrintHub"
+    },
+    "id": "c040",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "bank_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Hamza Khan payment redirected to hamza.k.payments@example.net",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 87100,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "hamza.k.payments@example.net",
+        "currency": "USD"
+      },
+      "invoiceNumber": "INV-49"
+    },
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": true,
+      "claimedSender": "Hamza Khan"
+    },
+    "id": "c041",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "similar_but_different",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New, genuinely different payee \"Nova Ads\"",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Nova Ads",
+      "amount": 45600,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "pay@novaads.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c042",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "supplier_own_contacts",
+    "lang": "en",
+    "kind": "message",
+    "description": "Message from PrintHub with known contacts",
+    "message": "PrintHub help centre: https://printhub.io/help",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PrintHub"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [],
+      "urls": [
+        "https://printhub.io/help"
+      ]
+    },
+    "id": "c043",
+    "split": "test"
+  },
+  {
+    "label": "scam",
+    "pattern": "lookalike_domain",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Acme Ltd paid to billing@acrne.com",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 55500,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "billing@acrne.com",
+        "currency": "USD"
+      }
+    },
+    "id": "c044",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "supplier_contact_mismatch",
+    "lang": "en",
+    "kind": "message",
+    "description": "Message as Acme Ltd with unknown contact",
+    "message": "From Acme Ltd: please send remittance to accounts@acme-ltd.example from now on.",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Acme Ltd"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [
+        "accounts@acme-ltd.example"
+      ],
+      "urls": []
+    },
+    "id": "c045",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "small_repeat_payments",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Two small payments to Hamza Khan",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 35700,
+      "invoiceNumber": "SM-5-2"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 33500,
+        "invoiceNumber": "SM-5-1",
+        "hoursAgo": 45
+      }
+    ],
+    "id": "c046",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "monthly_retainer",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Retainer Hamza Khan, next invoice in sequence",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 50000,
+      "invoiceNumber": "RT-215"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 50000,
+        "invoiceNumber": "RT-214",
+        "hoursAgo": 768
+      }
+    ],
+    "id": "c047",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "supplier_contact_mismatch",
+    "lang": "en",
+    "kind": "message",
+    "description": "Message as PrintHub with unknown contact",
+    "message": "PrintHub billing: our number changed to +1 212 555 0000, call to update your payment method.",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PrintHub"
+    },
+    "contacts": {
+      "phones": [
+        "+1 212 555 0000"
+      ],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c048",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "monthly_retainer",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Retainer PrintHub, next invoice in sequence",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 50000,
+      "invoiceNumber": "RT-257"
+    },
+    "history": [
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 50000,
+        "invoiceNumber": "RT-256",
+        "hoursAgo": 744
+      }
+    ],
+    "id": "c049",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "similar_but_different",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New, genuinely different payee \"Printful Hub\"",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Printful Hub",
+      "amount": 49300,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "pay@printfulhub.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c050",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "duplicate_invoice",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Invoice INV-5802 re-submitted as INV-5802-A",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 22500,
+      "invoiceNumber": "INV-5802-A"
+    },
+    "history": [
+      {
+        "payeeId": "acme",
+        "payeeName": "Acme Ltd",
+        "amount": 22500,
+        "invoiceNumber": "INV-5802",
+        "hoursAgo": 300
+      }
+    ],
+    "id": "c051",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "hurried_known_payee",
+    "lang": "es",
+    "kind": "payment",
+    "description": "PrintHub asks for payment today (es)",
+    "message": "Hola Sara, ¿podrías pagar la factura hoy? Cerramos el mes. ¡Gracias!",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 39100,
+      "invoiceNumber": "H-2"
+    },
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PrintHub"
+    },
+    "id": "c052",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Hamza Khan",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 29000,
+      "invoiceNumber": "R-119"
+    },
+    "id": "c053",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "supplier_own_contacts",
+    "lang": "en",
+    "kind": "message",
+    "description": "Message from Acme Ltd with known contacts",
+    "message": "Acme Ltd: questions about invoice A-102? Call us on (415) 555-0100.",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Acme Ltd"
+    },
+    "contacts": {
+      "phones": [
+        "(415) 555-0100"
+      ],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c054",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "supplier_own_contacts",
+    "lang": "en",
+    "kind": "message",
+    "description": "Message from PrintHub with known contacts",
+    "message": "PrintHub: your proofs are attached for review.",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PrintHub"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c055",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "genuine_paypal_notice",
+    "lang": "en",
+    "kind": "message",
+    "description": "PayPal notification without call-back number",
+    "message": "PayPal: You received $450.00 USD from Bright Bakery. Log in to paypal.com to see details.",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PayPal"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c056",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "monthly_retainer",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Retainer PrintHub, next invoice in sequence",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 50000,
+      "invoiceNumber": "RT-222"
+    },
+    "history": [
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 50000,
+        "invoiceNumber": "RT-221",
+        "hoursAgo": 696
+      }
+    ],
+    "id": "c057",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "supplier_own_contacts",
+    "lang": "en",
+    "kind": "message",
+    "description": "Message from Hamza Khan with known contacts",
+    "message": "Hamza here, sent the final files. Invoice from hamza.design@gmail.com as usual.",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Hamza Khan"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [
+        "hamza.design@gmail.com"
+      ],
+      "urls": []
+    },
+    "id": "c058",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "bank_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Acme Ltd payment redirected to acme.billing@protonmail.example",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 59900,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "acme.billing@protonmail.example",
+        "currency": "USD"
+      },
+      "invoiceNumber": "INV-36"
+    },
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": true,
+      "claimedSender": "Acme Ltd"
+    },
+    "id": "c059",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "lookalike_domain",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Acme Ltd paid to billing@acme.co",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 45900,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "billing@acme.co",
+        "currency": "USD"
+      }
+    },
+    "id": "c060",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "lookalike_payee",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New payee \"Acrne Ltd\" imitating an existing one",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Acrne Ltd",
+      "amount": 44600,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "billing@acrneltd.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c061",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "hurried_known_payee",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Hamza Khan asks for payment today (en)",
+    "message": "Final reminder on last month's invoice, please pay when you can today.",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 27000,
+      "invoiceNumber": "H-6"
+    },
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Hamza Khan"
+    },
+    "id": "c062",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "genuine_paypal_notice",
+    "lang": "en",
+    "kind": "message",
+    "description": "PayPal notification without call-back number",
+    "message": "PayPal: Your monthly statement is ready. Log in to view it.",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PayPal"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c063",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "similar_but_different",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New, genuinely different payee \"Apex Ltd\"",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Apex Ltd",
+      "amount": 11300,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "pay@apexltd.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c064",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "paypal_invoice_phone",
+    "lang": "en",
+    "kind": "message",
+    "description": "PayPal-branded invoice with a call-back number",
+    "message": "Invoice from PayPal Billing Dept. Geek Squad annual plan $389. Questions? Call +1 877 555 0123.",
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PayPal"
+    },
+    "contacts": {
+      "phones": [
+        "+1 877 555 0123"
+      ],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c065",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "supplier_contact_mismatch",
+    "lang": "en",
+    "kind": "message",
+    "description": "Message as Acme Ltd with unknown contact",
+    "message": "Acme Ltd: your invoice is ready, pay here https://acme-invoices.example/pay/7741",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Acme Ltd"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [],
+      "urls": [
+        "https://acme-invoices.example/pay/7741"
+      ]
+    },
+    "id": "c066",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "hurried_known_payee",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Hamza Khan asks for payment today (en)",
+    "message": "Reminder: invoice due today, appreciate a quick payment.",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 21100,
+      "invoiceNumber": "H-1"
+    },
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Hamza Khan"
+    },
+    "id": "c067",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "split_payments",
+    "lang": "en",
+    "kind": "payment",
+    "description": "5 payments of ~$695 to PrintHub within 72h",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 69500,
+      "invoiceNumber": "S-5-0"
+    },
+    "history": [
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 87600,
+        "invoiceNumber": "S-5-1",
+        "hoursAgo": 2
+      },
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 72700,
+        "invoiceNumber": "S-5-2",
+        "hoursAgo": 12
+      },
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 86800,
+        "invoiceNumber": "S-5-3",
+        "hoursAgo": 22
+      },
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 93600,
+        "invoiceNumber": "S-5-4",
+        "hoursAgo": 32
+      }
+    ],
+    "id": "c068",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Acme Ltd",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 68900,
+      "invoiceNumber": "R-108"
+    },
+    "id": "c069",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "split_payments",
+    "lang": "en",
+    "kind": "payment",
+    "description": "5 payments of ~$791 to Hamza Khan within 72h",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 79100,
+      "invoiceNumber": "S-1-0"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 76500,
+        "invoiceNumber": "S-1-1",
+        "hoursAgo": 2
+      },
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 52900,
+        "invoiceNumber": "S-1-2",
+        "hoursAgo": 12
+      },
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 54400,
+        "invoiceNumber": "S-1-3",
+        "hoursAgo": 22
+      },
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 74700,
+        "invoiceNumber": "S-1-4",
+        "hoursAgo": 32
+      }
+    ],
+    "id": "c070",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "lookalike_payee",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New payee \"Acmee Ltd\" imitating an existing one",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Acmee Ltd",
+      "amount": 76500,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "billing@acmeeltd.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c071",
+    "split": "test"
+  },
+  {
+    "label": "scam",
+    "pattern": "paypal_invoice_phone",
+    "lang": "es",
+    "kind": "message",
+    "description": "PayPal-branded invoice with a call-back number",
+    "message": "Factura de PayPal: cargo de $650 por iPhone. Si no reconoce el cargo, llame al +1 866 555 0111.",
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PayPal"
+    },
+    "contacts": {
+      "phones": [
+        "+1 866 555 0111"
+      ],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c072",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "genuine_paypal_notice",
+    "lang": "en",
+    "kind": "message",
+    "description": "PayPal notification without call-back number",
+    "message": "PayPal: Nova Apps viewed your invoice SS-1043.",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PayPal"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c073",
+    "split": "test"
+  },
+  {
+    "label": "scam",
+    "pattern": "split_payments",
+    "lang": "en",
+    "kind": "payment",
+    "description": "3 payments of ~$860 to PrintHub within 72h",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 86000,
+      "invoiceNumber": "S-3-0"
+    },
+    "history": [
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 87400,
+        "invoiceNumber": "S-3-1",
+        "hoursAgo": 2
+      },
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 73500,
+        "invoiceNumber": "S-3-2",
+        "hoursAgo": 12
+      }
+    ],
+    "id": "c074",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "monthly_retainer",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Retainer Hamza Khan, next invoice in sequence",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 50000,
+      "invoiceNumber": "RT-264"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 50000,
+        "invoiceNumber": "RT-263",
+        "hoursAgo": 744
+      }
+    ],
+    "id": "c075",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Acme Ltd",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 63200,
+      "invoiceNumber": "R-107"
+    },
+    "id": "c076",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "similar_but_different",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New, genuinely different payee \"Hamid Khan\"",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Hamid Khan",
+      "amount": 31900,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "pay@hamidkhan.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c077",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "supplier_own_contacts",
+    "lang": "en",
+    "kind": "message",
+    "description": "Message from Acme Ltd with known contacts",
+    "message": "Your Acme invoice: https://www.acme.com/invoices/102",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Acme Ltd"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [],
+      "urls": [
+        "https://www.acme.com/invoices/102"
+      ]
+    },
+    "id": "c078",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "supplier_own_contacts",
+    "lang": "en",
+    "kind": "message",
+    "description": "Message from Acme Ltd with known contacts",
+    "message": "Acme Ltd office hours changed, same number 415.555.0100.",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Acme Ltd"
+    },
+    "contacts": {
+      "phones": [
+        "415.555.0100"
+      ],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c079",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "payroll_diversion",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Employee pay redirected days before payday",
+    "now": "2026-11-14T09:00:00Z",
+    "intent": {
+      "payeeId": "omar",
+      "payeeName": "Omar Siddiq",
+      "amount": 300000,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "omar.siddiq4@example.net",
+        "currency": "USD"
+      }
+    },
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": true,
+      "claimedSender": "Omar Siddiq"
+    },
+    "id": "c080",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "verified_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Acme Ltd paid to details verified 2+ weeks ago",
+    "payeeOverride": {
+      "verifiedPayout": {
+        "method": "paypal_email",
+        "receiver": "new-6@acme.com",
+        "currency": "USD"
+      },
+      "payoutVerifiedAt": "2026-10-21T09:00:00.000Z"
+    },
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 68100,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "new-6@acme.com",
+        "currency": "USD"
+      }
+    },
+    "id": "c081",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "normal_payroll",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Payroll to long-verified details",
+    "now": "2026-11-10T09:00:00Z",
+    "intent": {
+      "payeeId": "omar",
+      "payeeName": "Omar Siddiq",
+      "amount": 300000
+    },
+    "id": "c082",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Hamza Khan",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 56100,
+      "invoiceNumber": "R-101"
+    },
+    "id": "c083",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "normal_payroll",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Payroll to long-verified details",
+    "now": "2026-11-10T09:00:00Z",
+    "intent": {
+      "payeeId": "omar",
+      "payeeName": "Omar Siddiq",
+      "amount": 300000
+    },
+    "id": "c084",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "duplicate_invoice",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Invoice INV-5272 re-submitted as INV-5272/1",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 38800,
+      "invoiceNumber": "INV-5272/1"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 38800,
+        "invoiceNumber": "INV-5272",
+        "hoursAgo": 800
+      }
+    ],
+    "id": "c085",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Acme Ltd",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 83600,
+      "invoiceNumber": "R-114"
+    },
+    "id": "c086",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "small_repeat_payments",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Two small payments to PrintHub",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 12600,
+      "invoiceNumber": "SM-4-2"
+    },
+    "history": [
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 16100,
+        "invoiceNumber": "SM-4-1",
+        "hoursAgo": 40
+      }
+    ],
+    "id": "c087",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "payroll_diversion",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Employee pay redirected days before payday",
+    "now": "2026-11-12T09:00:00Z",
+    "intent": {
+      "payeeId": "omar",
+      "payeeName": "Omar Siddiq",
+      "amount": 300000,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "omar.siddiq2@example.net",
+        "currency": "USD"
+      }
+    },
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": true,
+      "claimedSender": "Omar Siddiq"
+    },
+    "id": "c088",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "lookalike_domain",
+    "lang": "en",
+    "kind": "payment",
+    "description": "PrintHub paid to pay@prlnthub.io",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 51500,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "pay@prlnthub.io",
+        "currency": "USD"
+      }
+    },
+    "id": "c089",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "genuine_paypal_notice",
+    "lang": "en",
+    "kind": "message",
+    "description": "PayPal notification without call-back number",
+    "message": "PayPal: A payout of $500.00 was sent to Hamza Khan.",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PayPal"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c090",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Hamza Khan",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 42300,
+      "invoiceNumber": "R-112"
+    },
+    "id": "c091",
+    "split": "test"
+  },
+  {
+    "label": "scam",
+    "pattern": "lookalike_payee",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New payee \"Аcme Ltd\" imitating an existing one",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Аcme Ltd",
+      "amount": 51400,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "billing@cmeltd.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c092",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "small_repeat_payments",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Two small payments to Hamza Khan",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 12700,
+      "invoiceNumber": "SM-6-2"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 28100,
+        "invoiceNumber": "SM-6-1",
+        "hoursAgo": 50
+      }
+    ],
+    "id": "c093",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "monthly_retainer",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Retainer Hamza Khan, next invoice in sequence",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 50000,
+      "invoiceNumber": "RT-236"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 50000,
+        "invoiceNumber": "RT-235",
+        "hoursAgo": 672
+      }
+    ],
+    "id": "c094",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "lookalike_payee",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New payee \"PrlntHub\" imitating an existing one",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "PrlntHub",
+      "amount": 89200,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "billing@prlnthub.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c095",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "small_repeat_payments",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Two small payments to Hamza Khan",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 18300,
+      "invoiceNumber": "SM-2-2"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 14400,
+        "invoiceNumber": "SM-2-1",
+        "hoursAgo": 30
+      }
+    ],
+    "id": "c096",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to PrintHub",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 68300,
+      "invoiceNumber": "R-116"
+    },
+    "id": "c097",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to PrintHub",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 54700,
+      "invoiceNumber": "R-103"
+    },
+    "id": "c098",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "ceo_impersonation",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Urgent \"boss\" request to a new account (en)",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Blue Harbor Trading",
+      "amount": 664200
+    },
+    "message": "Board approved. Please process payment to Northwind Advisory immediately, I'll explain later. Use WhatsApp only.",
+    "signals": {
+      "urgency": true,
+      "authorityClaim": true,
+      "secrecyRequest": false,
+      "offChannelRequest": true,
+      "paymentDetailsChange": false,
+      "claimedSender": "Sara (CEO)"
+    },
+    "id": "c099",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "similar_but_different",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New, genuinely different payee \"Acme Labs\"",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Acme Labs",
+      "amount": 44700,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "pay@acmelabs.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c100",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "paypal_invoice_phone",
+    "lang": "en",
+    "kind": "message",
+    "description": "PayPal-branded invoice with a call-back number",
+    "message": "You've been billed $823.00 for a Bitcoin purchase. To cancel or dispute, call PayPal support at 1-808-555-0199.",
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PayPal"
+    },
+    "contacts": {
+      "phones": [
+        "1-808-555-0199"
+      ],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c101",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "monthly_retainer",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Retainer PrintHub, next invoice in sequence",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 50000,
+      "invoiceNumber": "RT-278"
+    },
+    "history": [
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 50000,
+        "invoiceNumber": "RT-277",
+        "hoursAgo": 768
+      }
+    ],
+    "id": "c102",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "hurried_known_payee",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Hamza Khan asks for payment today (en)",
+    "message": "Urgent-ish: please pay by end of day, thank you!",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 54200,
+      "invoiceNumber": "H-9"
+    },
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Hamza Khan"
+    },
+    "id": "c103",
+    "split": "test"
+  },
+  {
+    "label": "scam",
+    "pattern": "bank_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Acme Ltd payment redirected to accounts@acmeltd.example",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 84400,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "accounts@acmeltd.example",
+        "currency": "USD"
+      },
+      "invoiceNumber": "INV-73"
+    },
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": true,
+      "claimedSender": "Acme Ltd"
+    },
+    "id": "c104",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "ceo_impersonation",
+    "lang": "es",
+    "kind": "payment",
+    "description": "Urgent \"boss\" request to a new account (es)",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Apex Partners",
+      "amount": 680800
+    },
+    "message": "Soy Sara. Necesito que pagues hoy mismo a esta nueva cuenta, es urgente y confidencial. No llames, escríbeme por WhatsApp.",
+    "signals": {
+      "urgency": true,
+      "authorityClaim": true,
+      "secrecyRequest": true,
+      "offChannelRequest": true,
+      "paymentDetailsChange": false,
+      "claimedSender": "Sara (CEO)"
+    },
+    "id": "c105",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Hamza Khan",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 34000,
+      "invoiceNumber": "R-102"
+    },
+    "id": "c106",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "hurried_known_payee",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Hamza Khan asks for payment today (en)",
+    "message": "Sorry to chase, any chance the payment goes out before the weekend?",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 48100,
+      "invoiceNumber": "H-4"
+    },
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Hamza Khan"
+    },
+    "id": "c107",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "split_payments",
+    "lang": "en",
+    "kind": "payment",
+    "description": "4 payments of ~$944 to PrintHub within 72h",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 94400,
+      "invoiceNumber": "S-2-0"
+    },
+    "history": [
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 70800,
+        "invoiceNumber": "S-2-1",
+        "hoursAgo": 2
+      },
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 54500,
+        "invoiceNumber": "S-2-2",
+        "hoursAgo": 12
+      },
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 61500,
+        "invoiceNumber": "S-2-3",
+        "hoursAgo": 22
+      }
+    ],
+    "id": "c108",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to PrintHub",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 33300,
+      "invoiceNumber": "R-110"
+    },
+    "id": "c109",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "normal_payroll",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Payroll to long-verified details",
+    "now": "2026-11-13T09:00:00Z",
+    "intent": {
+      "payeeId": "omar",
+      "payeeName": "Omar Siddiq",
+      "amount": 300000
+    },
+    "id": "c110",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "duplicate_invoice",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Invoice INV-2055 re-submitted as INV-2055",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 70000,
+      "invoiceNumber": "INV-2055"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 70000,
+        "invoiceNumber": "INV-2055",
+        "hoursAgo": 900
+      }
+    ],
+    "id": "c111",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "similar_but_different",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New, genuinely different payee \"Hamza Ali\"",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Hamza Ali",
+      "amount": 11700,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "pay@hamzaali.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c112",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Hamza Khan",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 57700,
+      "invoiceNumber": "R-111"
+    },
+    "id": "c113",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "verified_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Hamza Khan paid to details verified 2+ weeks ago",
+    "payeeOverride": {
+      "verifiedPayout": {
+        "method": "paypal_email",
+        "receiver": "new-2@example.com",
+        "currency": "USD"
+      },
+      "payoutVerifiedAt": "2026-10-25T09:00:00.000Z"
+    },
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 60900,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "new-2@example.com",
+        "currency": "USD"
+      }
+    },
+    "id": "c114",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "verified_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "PrintHub paid to details verified 2+ weeks ago",
+    "payeeOverride": {
+      "verifiedPayout": {
+        "method": "paypal_email",
+        "receiver": "new-7@printhub.io",
+        "currency": "USD"
+      },
+      "payoutVerifiedAt": "2026-10-20T09:00:00.000Z"
+    },
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 27100,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "new-7@printhub.io",
+        "currency": "USD"
+      }
+    },
+    "id": "c115",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "normal_payroll",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Payroll to long-verified details",
+    "now": "2026-11-14T09:00:00Z",
+    "intent": {
+      "payeeId": "omar",
+      "payeeName": "Omar Siddiq",
+      "amount": 300000
+    },
+    "id": "c116",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "lookalike_payee",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New payee \"Pr1ntHub\" imitating an existing one",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Pr1ntHub",
+      "amount": 68300,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "billing@pr1nthub.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c117",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "similar_but_different",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New, genuinely different payee \"PrintHouse\"",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "PrintHouse",
+      "amount": 22400,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "pay@printhouse.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c118",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "split_payments",
+    "lang": "en",
+    "kind": "payment",
+    "description": "3 payments of ~$776 to PrintHub within 72h",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 77600,
+      "invoiceNumber": "S-4-0"
+    },
+    "history": [
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 66600,
+        "invoiceNumber": "S-4-1",
+        "hoursAgo": 2
+      },
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 59700,
+        "invoiceNumber": "S-4-2",
+        "hoursAgo": 12
+      }
+    ],
+    "id": "c119",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "supplier_contact_mismatch",
+    "lang": "en",
+    "kind": "message",
+    "description": "Message as PrintHub with unknown contact",
+    "message": "PrintHub: verify your account to avoid service interruption http://printhub.example.payments-secure.example/login",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PrintHub"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [],
+      "urls": [
+        "http://printhub.example.payments-secure.example/login"
+      ]
+    },
+    "id": "c120",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "payroll_diversion",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Employee pay redirected days before payday",
+    "now": "2026-11-10T09:00:00Z",
+    "intent": {
+      "payeeId": "omar",
+      "payeeName": "Omar Siddiq",
+      "amount": 300000,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "omar.siddiq0@example.net",
+        "currency": "USD"
+      }
+    },
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": true,
+      "claimedSender": "Omar Siddiq"
+    },
+    "id": "c121",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "similar_but_different",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New, genuinely different payee \"PaintHub Studio\"",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "PaintHub Studio",
+      "amount": 56500,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "pay@painthubstudio.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c122",
+    "split": "test"
+  },
+  {
+    "label": "scam",
+    "pattern": "ceo_impersonation",
+    "lang": "ar",
+    "kind": "payment",
+    "description": "Urgent \"boss\" request to a new account (ar)",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Apex Partners",
+      "amount": 938000
+    },
+    "message": "هنا المدير التنفيذي. حوّل المبلغ إلى الحساب الجديد خلال ساعة، الأمر عاجل وسري.",
+    "signals": {
+      "urgency": true,
+      "authorityClaim": true,
+      "secrecyRequest": true,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Sara (CEO)"
+    },
+    "id": "c123",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Hamza Khan",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 28100,
+      "invoiceNumber": "R-120"
+    },
+    "id": "c124",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "hurried_known_payee",
+    "lang": "ar",
+    "kind": "payment",
+    "description": "Hamza Khan asks for payment today (ar)",
+    "message": "مرحباً سارة، هل يمكن دفع الفاتورة اليوم؟ شكراً",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 21000,
+      "invoiceNumber": "H-5"
+    },
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Hamza Khan"
+    },
+    "id": "c125",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "ceo_impersonation",
+    "lang": "ur",
+    "kind": "payment",
+    "description": "Urgent \"boss\" request to a new account (ur)",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Northwind Advisory",
+      "amount": 911000
+    },
+    "message": "سارہ بول رہی ہوں، میٹنگ میں ہوں۔ فوراً اس نئے اکاؤنٹ میں 8,000 ڈالر بھیج دیں، کسی کو مت بتائیں۔",
+    "signals": {
+      "urgency": true,
+      "authorityClaim": true,
+      "secrecyRequest": true,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Sara (CEO)"
+    },
+    "id": "c126",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "bank_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "PrintHub payment redirected to billing@printhub.example.net",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 36100,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "billing@printhub.example.net",
+        "currency": "USD"
+      },
+      "invoiceNumber": "INV-34"
+    },
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": true,
+      "claimedSender": "PrintHub"
+    },
+    "id": "c127",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "payroll_diversion",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Employee pay redirected days before payday",
+    "now": "2026-11-11T09:00:00Z",
+    "intent": {
+      "payeeId": "omar",
+      "payeeName": "Omar Siddiq",
+      "amount": 300000,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "omar.siddiq1@example.net",
+        "currency": "USD"
+      }
+    },
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": true,
+      "claimedSender": "Omar Siddiq"
+    },
+    "id": "c128",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "lookalike_payee",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New payee \"Hamza Kahn\" imitating an existing one",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Hamza Kahn",
+      "amount": 62400,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "billing@hamzakahn.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c129",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Hamza Khan",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 51700,
+      "invoiceNumber": "R-124"
+    },
+    "id": "c130",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "similar_but_different",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New, genuinely different payee \"Acme Design Co\"",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Acme Design Co",
+      "amount": 41400,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "pay@acmedesignco.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c131",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "small_repeat_payments",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Two small payments to PrintHub",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 29600,
+      "invoiceNumber": "SM-1-2"
+    },
+    "history": [
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 35500,
+        "invoiceNumber": "SM-1-1",
+        "hoursAgo": 25
+      }
+    ],
+    "id": "c132",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "monthly_retainer",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Retainer Hamza Khan, next invoice in sequence",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 50000,
+      "invoiceNumber": "RT-208"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 50000,
+        "invoiceNumber": "RT-207",
+        "hoursAgo": 720
+      }
+    ],
+    "id": "c133",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "small_repeat_payments",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Two small payments to PrintHub",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 10700,
+      "invoiceNumber": "SM-0-2"
+    },
+    "history": [
+      {
+        "payeeId": "printhub",
+        "payeeName": "PrintHub",
+        "amount": 14400,
+        "invoiceNumber": "SM-0-1",
+        "hoursAgo": 20
+      }
+    ],
+    "id": "c134",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Hamza Khan",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 69000,
+      "invoiceNumber": "R-100"
+    },
+    "id": "c135",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to PrintHub",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 41900,
+      "invoiceNumber": "R-109"
+    },
+    "id": "c136",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "verified_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Acme Ltd paid to details verified 2+ weeks ago",
+    "payeeOverride": {
+      "verifiedPayout": {
+        "method": "paypal_email",
+        "receiver": "new-4@acme.com",
+        "currency": "USD"
+      },
+      "payoutVerifiedAt": "2026-10-23T09:00:00.000Z"
+    },
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 25500,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "new-4@acme.com",
+        "currency": "USD"
+      }
+    },
+    "id": "c137",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "lookalike_payee",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New payee \"Harnza Khan\" imitating an existing one",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Harnza Khan",
+      "amount": 80300,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "billing@harnzakhan.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c138",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "verified_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Acme Ltd paid to details verified 2+ weeks ago",
+    "payeeOverride": {
+      "verifiedPayout": {
+        "method": "paypal_email",
+        "receiver": "new-5@acme.com",
+        "currency": "USD"
+      },
+      "payoutVerifiedAt": "2026-10-22T09:00:00.000Z"
+    },
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 61200,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "new-5@acme.com",
+        "currency": "USD"
+      }
+    },
+    "id": "c139",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Acme Ltd",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 73200,
+      "invoiceNumber": "R-118"
+    },
+    "id": "c140",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "hurried_known_payee",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Hamza Khan asks for payment today (en)",
+    "message": "Need this one settled ASAP if possible, our supplier is waiting.",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 44800,
+      "invoiceNumber": "H-7"
+    },
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Hamza Khan"
+    },
+    "id": "c141",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "normal_payroll",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Payroll to long-verified details",
+    "now": "2026-11-12T09:00:00Z",
+    "intent": {
+      "payeeId": "omar",
+      "payeeName": "Omar Siddiq",
+      "amount": 300000
+    },
+    "id": "c142",
+    "split": "test"
+  },
+  {
+    "label": "scam",
+    "pattern": "paypal_invoice_phone",
+    "lang": "en",
+    "kind": "message",
+    "description": "PayPal-branded invoice with a call-back number",
+    "message": "PayPal invoice: Norton LifeLock renewal $499.99. If you did not authorise this charge, call +1 (888) 555-0147 within 24 hours.",
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PayPal"
+    },
+    "contacts": {
+      "phones": [
+        "+1 (888) 555-0147"
+      ],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c143",
+    "split": "test"
+  },
+  {
+    "label": "scam",
+    "pattern": "lookalike_payee",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New payee \"Ηamza Khan\" imitating an existing one",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Ηamza Khan",
+      "amount": 50600,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "billing@amzakhan.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c144",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "ceo_impersonation",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Urgent \"boss\" request to a new account (en)",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Apex Partners",
+      "amount": 577100
+    },
+    "message": "This is the CEO. Wire the deposit to our new partner before 3pm or we lose the deal. Keep this between us.",
+    "signals": {
+      "urgency": true,
+      "authorityClaim": true,
+      "secrecyRequest": true,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Sara (CEO)"
+    },
+    "id": "c145",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "duplicate_invoice",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Invoice INV-3183 re-submitted as INV-3183B",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 65500,
+      "invoiceNumber": "INV-3183B"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 65500,
+        "invoiceNumber": "INV-3183",
+        "hoursAgo": 300
+      }
+    ],
+    "id": "c146",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "supplier_own_contacts",
+    "lang": "en",
+    "kind": "message",
+    "description": "Message from Acme Ltd with known contacts",
+    "message": "Acme Ltd: statement attached, reply to billing@acme.com.",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Acme Ltd"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [
+        "billing@acme.com"
+      ],
+      "urls": []
+    },
+    "id": "c147",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "supplier_own_contacts",
+    "lang": "en",
+    "kind": "message",
+    "description": "Message from Acme Ltd with known contacts",
+    "message": "Acme Ltd: thanks for your payment last week!",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Acme Ltd"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c148",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Hamza Khan",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 21000,
+      "invoiceNumber": "R-105"
+    },
+    "id": "c149",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "duplicate_invoice",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Invoice INV-5928 re-submitted as inv-05928",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 74000,
+      "invoiceNumber": "inv-05928"
+    },
+    "history": [
+      {
+        "payeeId": "acme",
+        "payeeName": "Acme Ltd",
+        "amount": 74000,
+        "invoiceNumber": "INV-5928",
+        "hoursAgo": 100
+      }
+    ],
+    "id": "c150",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "genuine_paypal_notice",
+    "lang": "en",
+    "kind": "message",
+    "description": "PayPal notification without call-back number",
+    "message": "PayPal: Your invoice SS-1042 was paid.",
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "PayPal"
+    },
+    "contacts": {
+      "phones": [],
+      "emails": [],
+      "urls": []
+    },
+    "id": "c151",
+    "split": "test"
+  },
+  {
+    "label": "scam",
+    "pattern": "ceo_impersonation",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Urgent \"boss\" request to a new account (en)",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Blue Harbor Trading",
+      "amount": 850100
+    },
+    "message": "Hi, it's Sara from my personal number. Urgent: the auditor needs a payment to this new account in the next hour.",
+    "signals": {
+      "urgency": true,
+      "authorityClaim": true,
+      "secrecyRequest": false,
+      "offChannelRequest": true,
+      "paymentDetailsChange": false,
+      "claimedSender": "Sara (CEO)"
+    },
+    "id": "c152",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "verified_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Hamza Khan paid to details verified 2+ weeks ago",
+    "payeeOverride": {
+      "verifiedPayout": {
+        "method": "paypal_email",
+        "receiver": "new-3@example.com",
+        "currency": "USD"
+      },
+      "payoutVerifiedAt": "2026-10-24T09:00:00.000Z"
+    },
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 41400,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "new-3@example.com",
+        "currency": "USD"
+      }
+    },
+    "id": "c153",
+    "split": "test"
+  },
+  {
+    "label": "normal",
+    "pattern": "hurried_known_payee",
+    "lang": "ur",
+    "kind": "payment",
+    "description": "Acme Ltd asks for payment today (ur)",
+    "message": "سارہ، اگر ممکن ہو تو آج انوائس کی ادائیگی کر دیں۔ شکریہ",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 54900,
+      "invoiceNumber": "H-3"
+    },
+    "signals": {
+      "urgency": true,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": false,
+      "claimedSender": "Acme Ltd"
+    },
+    "id": "c154",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "split_payments",
+    "lang": "en",
+    "kind": "payment",
+    "description": "3 payments of ~$751 to Hamza Khan within 72h",
+    "intent": {
+      "payeeId": "hamza",
+      "payeeName": "Hamza Khan",
+      "amount": 75100,
+      "invoiceNumber": "S-0-0"
+    },
+    "history": [
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 87400,
+        "invoiceNumber": "S-0-1",
+        "hoursAgo": 2
+      },
+      {
+        "payeeId": "hamza",
+        "payeeName": "Hamza Khan",
+        "amount": 60300,
+        "invoiceNumber": "S-0-2",
+        "hoursAgo": 12
+      }
+    ],
+    "id": "c155",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "similar_but_different",
+    "lang": "en",
+    "kind": "payment",
+    "description": "New, genuinely different payee \"Acorn Ltd\"",
+    "intent": {
+      "payeeId": null,
+      "payeeName": "Acorn Ltd",
+      "amount": 37000,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "pay@acornltd.example",
+        "currency": "USD"
+      }
+    },
+    "id": "c156",
+    "split": "train"
+  },
+  {
+    "label": "normal",
+    "pattern": "routine_payment",
+    "lang": "en",
+    "kind": "payment",
+    "description": "Routine payment to Acme Ltd",
+    "intent": {
+      "payeeId": "acme",
+      "payeeName": "Acme Ltd",
+      "amount": 87800,
+      "invoiceNumber": "R-121"
+    },
+    "id": "c157",
+    "split": "train"
+  },
+  {
+    "label": "scam",
+    "pattern": "bank_detail_change",
+    "lang": "en",
+    "kind": "payment",
+    "description": "PrintHub payment redirected to printhub.accounts@gmail.example",
+    "intent": {
+      "payeeId": "printhub",
+      "payeeName": "PrintHub",
+      "amount": 48100,
+      "payout": {
+        "method": "paypal_email",
+        "receiver": "printhub.accounts@gmail.example",
+        "currency": "USD"
+      },
+      "invoiceNumber": "INV-73"
+    },
+    "signals": {
+      "urgency": false,
+      "authorityClaim": false,
+      "secrecyRequest": false,
+      "offChannelRequest": false,
+      "paymentDetailsChange": true,
+      "claimedSender": "PrintHub"
+    },
+    "id": "c158",
+    "split": "train"
+  }
+]

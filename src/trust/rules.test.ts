@@ -53,6 +53,15 @@ describe("R2 lookalikes", () => {
     else expect(m?.reason).toBe("confusable");
   });
 
+  it("catches swapped letters", () => {
+    expect(looksLike("Hamza Kahn", "Hamza Khan")?.reason).toBe("near-spelling");
+  });
+
+  it("does not treat a different brand's domain as imitation", () => {
+    const i = intent({ payeeName: "Acme Labs", amount: 30_000, payeeId: null, payout: { method: "paypal_email", receiver: "pay@acmelabs.example", currency: "USD" } });
+    expect(ids(ctx(i, { payee: null }))).not.toContain("R2:red");
+  });
+
   it("does not confuse genuinely different businesses", () => {
     expect(looksLike("Acme Labs", "Acme Ltd")).toBeNull();
     expect(looksLike("Nova Apps", "Nova Ads")).toBeNull();
@@ -80,6 +89,12 @@ describe("R3 duplicates", () => {
   it("blocks an altered copy of an invoice for the same amount", () => {
     const first = intent({ payeeName: "Acme Ltd", amount: 60_000, invoiceNumber: "INV-1042", createdAt: daysAgo(20) });
     const again = intent({ payeeName: "Acme Ltd", amount: 60_000, invoiceNumber: "INV-1042-A" });
+    expect(ids(ctx(again, { recentIntents: [first] }))).toContain("R3:red");
+  });
+
+  it("treats a slash suffix as an altered copy", () => {
+    const first = intent({ payeeName: "Acme Ltd", amount: 60_000, invoiceNumber: "INV-2183", createdAt: daysAgo(20) });
+    const again = intent({ payeeName: "Acme Ltd", amount: 60_000, invoiceNumber: "INV-2183/1" });
     expect(ids(ctx(again, { recentIntents: [first] }))).toContain("R3:red");
   });
 
