@@ -1,6 +1,6 @@
 // Fraud guard rules R1–R9. Each rule is deterministic and explains itself in plain language.
 import { payoutFingerprint } from "./hash";
-import { domainLooksLike, editDistance, emailDomain, looksLike, normaliseName } from "./lookalike";
+import { domainLooksLike, emailDomain, looksLike, normaliseName } from "./lookalike";
 import type {
   Flag,
   MessageContacts,

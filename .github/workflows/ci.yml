@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx tsc --noEmit
+      - run: npx eslint src
+      - run: npm test
+      # Rules-mode eval on the frozen case set; fails the build if results can't be produced.
+      - run: npm run eval
+      - uses: actions/upload-artifact@v4
+        with:
+          name: eval-results
+          path: eval/results.md

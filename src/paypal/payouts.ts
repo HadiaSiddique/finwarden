@@ -1,7 +1,8 @@
 // PayPal Payouts. Only src/trust/executor.ts may import this file (enforced by a test).
 // API reference: https://developer.paypal.com/docs/api/payments.payouts-batch/v1/
 import type { PayoutDetails } from "@/trust/types";
-import { hasPayPalCredentials, minorToValue, paypalFetch } from "./client";
+import { minorToValue, paypalFetch } from "./client";
+import { usingStub } from "./mode";
 import { stubCreatePayoutBatch } from "./stub";
 
 export interface PayoutItemInput {
@@ -32,12 +33,6 @@ function recipient(p: PayoutDetails) {
     case "bank":
       throw new Error("Bank payouts aren't enabled in Finwarden's sandbox build.");
   }
-}
-
-// Stub only for tests and local development, and never in production.
-export function usingStub(): boolean {
-  if (process.env.PAYPAL_MODE === "stub") return true;
-  return !hasPayPalCredentials() && process.env.NODE_ENV !== "production";
 }
 
 export async function createPayoutBatch(senderBatchId: string, items: PayoutItemInput[]): Promise<PayoutBatchResult> {
