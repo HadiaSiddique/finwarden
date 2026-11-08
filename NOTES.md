@@ -4,6 +4,9 @@ Decisions, deviations from the build brief, and things a judge might trip over.
 
 ## Decisions
 
+- **Zero budget, no card anywhere.** Gemini free tier (Groq fallback) instead of the Anthropic API; Vercel Hobby + Neon free instead of Render; GitHub Actions for scheduled jobs. See `docs/BUILD_BRIEF.md` section 0.
+- **Only fictional demo data goes to the AI**, because free-tier AI data may be used by the provider to improve its products.
+- **PayPal access is blocked from Pakistan.** Routes: PayPal Discord, or a teammate in a supported country who owns the developer account. Until then, a labelled stub backs tests and local dev only.
 - **Next.js 16 + TypeScript**, one app for UI and API. Node 24.
 - **Vitest** for tests. Trust-layer invariants live in `src/trust/policy.test.ts`; fraud rules in `src/trust/rules.test.ts`.
 - **Amounts are integer cents** everywhere in the trust layer.
@@ -17,16 +20,19 @@ Decisions, deviations from the build brief, and things a judge might trip over.
 
 Fill in when claimed. Judging ends Dec 15, 2026.
 
-| Sponsor | Claimed | Expires |
-|---|---|---|
-| AG Grid | | |
-| Bryntum | | |
-| Kernel | | |
-| Elastic (optional) | | |
-| Zapier (optional) | | |
+Use a trial only if its sign-up asks for no card.
+
+| Sponsor | Claimed | Card asked? | Expires |
+|---|---|---|---|
+| AG Studio | | | |
+| Bryntum | | | |
+| Kernel | | | |
 
 ## Status
 
-- [ ] PayPal sandbox access
-- [ ] Anthropic API key
-- [ ] Render account and $50 credits
+- [ ] PayPal sandbox access (Discord or teammate)
+- [ ] Gemini API key (aistudio.google.com)
+- [ ] Groq API key (console.groq.com), fallback
+- [ ] Vercel account (sign in with GitHub)
+- [ ] Neon account
+- [ ] GitHub account for the public repo
