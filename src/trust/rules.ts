@@ -246,7 +246,12 @@ export function contactMismatch(
     };
   }
   if (!claimedSender) return null;
-  const sender = allPayees.find((p) => normaliseName(p.name) === normaliseName(claimedSender));
+  // "Acme Accounts" or "Acme Ltd billing" both claim to be the payee "Acme Ltd".
+  const claimed = normaliseName(claimedSender);
+  const sender = allPayees.find((p) => {
+    const n = normaliseName(p.name);
+    return n === claimed || (n.length >= 4 && claimed.includes(n)) || (claimed.length >= 4 && n.includes(claimed));
+  });
   if (!sender) return null;
   const knownPhones = new Set(sender.contacts.phones.map(normalisePhone));
   const knownEmails = new Set(sender.contacts.emails.map((e) => e.toLowerCase()));

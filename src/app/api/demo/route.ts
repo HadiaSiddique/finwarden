@@ -22,6 +22,6 @@ export const POST = handler(
       return { reset: true };
     }
     if (body.action === "clock") return advanceClock(body.hours, user.id);
-    return runScenario(body.name, user.id);
+    return runScenario(body.name, user.id, (await getSession()).sid);
   },
 );

@@ -5,20 +5,23 @@ import type { Me } from "./App";
 import { api, dateTime, money, registerPasskey } from "./api";
 import DemoPanel from "./DemoPanel";
 import { AuditGrid, InvoicesGrid, PaymentsGrid } from "./Grids";
+import Inbox from "./Inbox";
 import Review from "./Review";
 import { Kpi, Logo } from "./ui";
 
-const TABS = ["Review", "Payments", "Invoices", "Audit log", "Demo"] as const;
-type Tab = (typeof TABS)[number];
+const TABS = ["Review", "Scam inbox", "Payments", "Invoices", "Audit log", "Demo"] as const;
+export type Tab = (typeof TABS)[number];
 
 export default function Dashboard({ me, onAuthChange }: { me: Me; onAuthChange: () => void }) {
   const [data, setData] = useState<DashboardData | null>(null);
   const [tab, setTab] = useState<Tab>("Review");
   const [error, setError] = useState<string | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
 
   const refresh = useCallback(async () => {
     try {
       setData(await api<DashboardData>("/api/dashboard"));
+      setRefreshKey((k) => k + 1);
       setError(null);
     } catch (e) {
       setError((e as Error).message);
@@ -90,10 +93,11 @@ export default function Dashboard({ me, onAuthChange }: { me: Me; onAuthChange: 
             </section>
             <div className="mt-6">
               {tab === "Review" && <Review data={data} me={me} refresh={refresh} />}
+              {tab === "Scam inbox" && <Inbox refreshKey={refreshKey} />}
               {tab === "Payments" && <PaymentsGrid rows={data.intents} />}
               {tab === "Invoices" && <InvoicesGrid rows={data.invoices} />}
               {tab === "Audit log" && <AuditGrid rows={data.audit} />}
-              {tab === "Demo" && <DemoPanel refresh={refresh} onReset={onAuthChange} onRan={() => setTab("Review")} />}
+              {tab === "Demo" && <DemoPanel refresh={refresh} onReset={onAuthChange} onRan={setTab} />}
             </div>
           </>
         )}
