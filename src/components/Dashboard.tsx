@@ -4,8 +4,9 @@ import type { DashboardData } from "@/services/dashboard";
 import type { Me } from "./App";
 import { api, dateTime, money, registerPasskey } from "./api";
 import DemoPanel from "./DemoPanel";
-import { AuditGrid, InvoicesGrid, PaymentsGrid } from "./Grids";
+import { AuditGrid, PaymentsGrid } from "./Grids";
 import Inbox from "./Inbox";
+import InvoicesPanel from "./InvoicesPanel";
 import Review from "./Review";
 import { Kpi, Logo } from "./ui";
 
@@ -95,7 +96,7 @@ export default function Dashboard({ me, onAuthChange }: { me: Me; onAuthChange: 
               {tab === "Review" && <Review data={data} me={me} refresh={refresh} />}
               {tab === "Scam inbox" && <Inbox refreshKey={refreshKey} />}
               {tab === "Payments" && <PaymentsGrid rows={data.intents} />}
-              {tab === "Invoices" && <InvoicesGrid rows={data.invoices} />}
+              {tab === "Invoices" && <InvoicesPanel data={data} refresh={refresh} />}
               {tab === "Audit log" && <AuditGrid rows={data.audit} />}
               {tab === "Demo" && <DemoPanel refresh={refresh} onReset={onAuthChange} onRan={setTab} />}
             </div>

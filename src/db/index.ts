@@ -34,7 +34,8 @@ const globalForDb = globalThis as unknown as { fwDb?: Promise<DB> };
 export function getDb(): Promise<DB> {
   if (!globalForDb.fwDb) {
     const url = process.env.DATABASE_URL;
-    globalForDb.fwDb = url ? Promise.resolve(createNeonDb(url)) : createPgliteDb(process.env.PGLITE_DIR ?? ".pglite");
+    // Neon: apply any pending migrations once per server start (a no-op when up to date).
+    globalForDb.fwDb = url ? migrateNeonDb(url).then(() => createNeonDb(url)) : createPgliteDb(process.env.PGLITE_DIR ?? ".pglite");
   }
   return globalForDb.fwDb;
 }

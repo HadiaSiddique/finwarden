@@ -38,11 +38,34 @@ const moneyCol = <T,>(field: keyof T & string, header: string): ColDef<T> => ({
 });
 
 type Invoice = DashboardData["invoices"][number];
-export function InvoicesGrid({ rows }: { rows: Invoice[] }) {
+export function InvoicesGrid({ rows, act }: { rows: Invoice[]; act: (action: "send" | "remind" | "check", invoiceId: string) => void }) {
   return (
     <Grid<Invoice>
       rows={rows}
       cols={[
+        {
+          headerName: "PayPal",
+          minWidth: 190,
+          sortable: false,
+          filter: false,
+          cellRenderer: (p: { data: Invoice }) =>
+            !p.data.paypalInvoiceId ? (
+              <button className="btn py-0.5 text-xs" onClick={() => act("send", p.data.id)}>
+                Send via PayPal
+              </button>
+            ) : p.data.status === "PAID" ? (
+              <span className="text-xs text-muted">Paid</span>
+            ) : (
+              <span className="flex gap-1">
+                <button className="btn py-0.5 text-xs" onClick={() => act("remind", p.data.id)}>
+                  Remind
+                </button>
+                <button className="btn py-0.5 text-xs" onClick={() => act("check", p.data.id)}>
+                  Paid?
+                </button>
+              </span>
+            ),
+        },
         { field: "number", headerName: "Invoice", maxWidth: 130 },
         { field: "client", headerName: "Client" },
         { field: "description", headerName: "For" },
