@@ -18,7 +18,15 @@ interface Candidate {
 }
 
 // Defaults chosen by probing the free tiers on Nov 9, 2026 (see NOTES.md). Env overrides them.
+// Gemini's free tier often answers 503 "high demand", so text-only fast tasks try Groq first.
 function candidates(kind: Kind, needsVision: boolean): Candidate[] {
+  const list = byProvider(kind);
+  if (needsVision) return list.filter((c) => c.vision);
+  if (kind === "fast") return [...list.filter((c) => c.provider === "groq"), ...list.filter((c) => c.provider !== "groq")];
+  return list;
+}
+
+function byProvider(kind: Kind): Candidate[] {
   const list: Candidate[] = [];
   if (process.env.GOOGLE_GENERATIVE_AI_API_KEY) {
     const id = kind === "main" ? (process.env.AI_MODEL ?? "gemini-2.5-flash") : (process.env.AI_FAST_MODEL ?? "gemini-3.5-flash-lite");
@@ -31,7 +39,7 @@ function candidates(kind: Kind, needsVision: boolean): Candidate[] {
     const id = process.env.AI_FALLBACK_MODEL ?? "openai/gpt-oss-120b";
     list.push({ provider: "groq", id, model: groq(id), vision: false });
   }
-  return needsVision ? list.filter((c) => c.vision) : list;
+  return list;
 }
 
 export function aiConfigured(): boolean {
@@ -102,7 +110,7 @@ export async function aiObject<T>(req: AiRequest<T>): Promise<AiResult<T> | null
           ],
           output: Output.object({ schema: req.schema }),
           maxRetries: 0,
-          abortSignal: AbortSignal.timeout(25_000),
+          abortSignal: AbortSignal.timeout(12_000),
         });
         const parsed = req.schema.safeParse(r.output);
         if (!parsed.success) continue; // retry once, then next provider
