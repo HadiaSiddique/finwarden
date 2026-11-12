@@ -66,7 +66,7 @@ export async function resetAndSeed(db: DB, now = new Date()) {
       id: "lina",
       name: "Lina Park",
       type: "freelancer",
-      verifiedPayout: { method: "venmo", receiver: "+1 718 555 0142", currency: "USD", country: "US" },
+      verifiedPayout: { method: "paypal_email", receiver: "lina.park@example.com", currency: "USD" },
       payoutVerifiedAt: ago(2),
       contacts: { phones: ["+1 718 555 0142"], emails: ["lina.park@example.com"], domains: [] },
       createdAt: ago(2),
