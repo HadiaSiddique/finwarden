@@ -21,7 +21,7 @@ The AI reads messages, extracts facts, drafts invoices and reminders, and explai
 4. Run **Urgent "CEO" request**: blocked by pressure and new-payee rules. It can only be approved in the app with a passkey.
 5. Run **PayPal invoice with a phone number**, or paste any message into **Scam inbox**, in any language.
 6. Run **Friday payout run**, approve with your passkey, then **Send via PayPal**. Payments of $1,000 or more need Omar too.
-7. In **Invoices**, type "Bill Ali $800 for the logo, due Friday", draft it, **Send via PayPal**, then **Remind**.
+7. In **Invoices**, type "Bill Ali $800 for the logo, due Friday" and draft it. Click **Pay link**, pay with a PayPal sandbox personal account, and the invoice flips to Paid only after PayPal confirms the capture.
 8. **Audit log** shows every decision with a plain-language reason. **Reset everything** in Demo restores the starting data.
 
 ## What's built
@@ -42,8 +42,9 @@ The AI reads messages, extracts facts, drafts invoices and reminders, and explai
 | API | Use | File |
 |---|---|---|
 | OAuth 2.0 | Client-credentials token, cached, with retries | [`src/paypal/client.ts`](src/paypal/client.ts) |
-| Payouts v1 | Batch payouts to freelancers, suppliers and staff, idempotent `sender_batch_id` | [`src/paypal/payouts.ts`](src/paypal/payouts.ts) |
-| Invoicing v2 | Create, send, remind and check invoices | [`src/paypal/invoicing.ts`](src/paypal/invoicing.ts) |
+| Payouts v1 | Batch payouts to freelancers, suppliers and staff, idempotent `sender_batch_id`. **Verified live in the sandbox.** | [`src/paypal/payouts.ts`](src/paypal/payouts.ts) |
+| Orders v2 + JS SDK (Checkout) | Public pay page per invoice with PayPal, Pay Later and card buttons; server-side create and capture; the invoice is marked paid only on a COMPLETED capture for the exact amount and reference. **Verified live in the sandbox.** | [`src/paypal/orders.ts`](src/paypal/orders.ts), [`src/app/pay/[id]/page.tsx`](src/app/pay/[id]/page.tsx) |
+| Invoicing v2 | Create, send, remind and check invoices. Code complete; our sandbox app was still returning `NOT_AUTHORIZED` for Invoicing at submission time, so in the demo use the Checkout pay link | [`src/paypal/invoicing.ts`](src/paypal/invoicing.ts) |
 
 A labelled stub stands in for PayPal in tests and local development only; the UI shows a banner when it's active, and it is refused in production.
 
@@ -84,7 +85,7 @@ Next.js 16, TypeScript, Drizzle ORM, Neon Postgres (PGlite locally), SimpleWebAu
 ## Limitations and roadmap
 
 - Sandbox only. Venmo payouts are US-only. Bank payouts aren't enabled.
-- Not built yet: PayPal Checkout and order-risk scoring, Disputes evidence packs, webhooks, Transaction Search reconciliation, cash-flow forecast, the PayPal Agent Toolkit integration, a cross-business payee trust network, and PayPal World wallets.
+- Not built yet: order-risk scoring, Disputes evidence packs, webhooks, Transaction Search reconciliation, cash-flow forecast, the PayPal Agent Toolkit integration, a cross-business payee trust network, and PayPal World wallets.
 - The callback to the contact on file is simulated in the demo.
 
 ## Licence
