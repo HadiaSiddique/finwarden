@@ -5,6 +5,8 @@ const nextConfig: NextConfig = {
   partialPrefetching: true,
   // PGlite loads its WebAssembly from disk; keep it out of the bundle.
   serverExternalPackages: ["@electric-sql/pglite"],
+  // Migrations are read from disk at runtime on first database connection.
+  outputFileTracingIncludes: { "/**": ["./drizzle/**"] },
   turbopack: {
     rules: {
       "*.css": {
