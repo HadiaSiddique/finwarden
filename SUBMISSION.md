@@ -14,17 +14,18 @@ Small businesses lose money at two moments: waiting to get paid, and paying out.
 
 Finwarden is a team of AI agents behind one trust layer, built on PayPal:
 
-- **Collections:** type "Bill Ali $800 for the logo, due Friday" and it drafts the invoice, sends it through PayPal Invoicing, and chases late payers with friendly, firm and final reminders written in the client's language.
+- **Collections:** type "Bill Ali $320 for the logo, due Friday" and the AI drafts the invoice; the client pays through a PayPal Checkout link (PayPal, Pay Later or card), and late payers get friendly, firm and final reminders written in their language.
 - **Payables:** batch payouts to freelancers, suppliers and staff through PayPal Payouts.
+- **Cash flow:** a 30-day forecast that warns when money gets tight and says which late invoices to chase first.
 - **Fraud guard:** nine rules hold risky payments: changed bank details, lookalike suppliers ("Acrne Ltd", Cyrillic letters), lookalike domains, duplicate or altered invoices, payments split under the approval limit, payroll diversion before payday, brand-new payees, pressure and impersonation, and contact details that don't match the ones on file.
 - **Scam inbox:** paste any invoice, money request or "you've been paid" email in any language and get a verdict with plain-language reasons.
-- **Trust layer:** the AI can hold a payment but never send money past a red flag. Approvals happen only in the app with a passkey, bound to the exact amount and recipient. $1,000+ needs two people. New or changed payees wait 24 hours. "We changed our bank details" never applies from a message; it waits for a callback on the number already on file. Every decision is in an append-only audit log with a reason.
+- **Trust layer:** the AI can hold a payment but never send money past a red flag. Approvals happen only in the app with a passkey, bound to the exact amount and recipient. $500+ needs two people. New or changed payees wait 24 hours. "We changed our bank details" never applies from a message; it waits for a callback on the number already on file. Every decision is in an append-only audit log with a reason.
 
 ## How we built it
 
 Next.js 16 and TypeScript, Postgres via Drizzle (Neon in production, PGlite locally), SimpleWebAuthn for passkeys, AG Grid for the dashboard, and the Vercel AI SDK.
 
-**PayPal:** OAuth client credentials, **Payouts v1** for batch payments (only one module can call it, and it re-checks every payment right before sending), and **Invoicing v2** to create, send, remind and check invoices. Everything runs in the PayPal sandbox.
+**PayPal:** OAuth client credentials; **Payouts v1** for batch payments (only one module can call it, and it re-checks every payment right before sending); and **Orders v2 with the JS SDK (Checkout)** so clients pay invoices with PayPal, Pay Later or card, and an invoice is marked paid only when PayPal confirms the capture for the exact amount. Both are verified live in the sandbox. Invoicing v2 code is written too, but our sandbox app was still refused permission at submission time.
 
 **AI:** Google **Gemini** (free tier) extracts structured signals from messages in any language and turns plain requests into invoices; **Groq** (`gpt-oss-120b`) is the automatic fallback. Output is Zod-validated, cached and capped. The AI never makes the money decision: rules in code do. **Claude Code** was used to build it.
 
