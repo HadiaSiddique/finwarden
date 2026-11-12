@@ -45,16 +45,21 @@ export function InvoicesGrid({ rows, act }: { rows: Invoice[]; act: (action: "se
       cols={[
         {
           headerName: "PayPal",
-          minWidth: 190,
+          minWidth: 260,
           sortable: false,
           filter: false,
           cellRenderer: (p: { data: Invoice }) =>
-            !p.data.paypalInvoiceId ? (
-              <button className="btn py-0.5 text-xs" onClick={() => act("send", p.data.id)}>
-                Send via PayPal
-              </button>
-            ) : p.data.status === "PAID" ? (
+            p.data.status === "PAID" ? (
               <span className="text-xs text-muted">Paid</span>
+            ) : !p.data.paypalInvoiceId ? (
+              <span className="flex gap-1">
+                <a className="btn py-0.5 text-xs" href={`/pay/${p.data.id}`} target="_blank" rel="noreferrer">
+                  Pay link
+                </a>
+                <button className="btn py-0.5 text-xs" onClick={() => act("send", p.data.id)}>
+                  Send PayPal invoice
+                </button>
+              </span>
             ) : (
               <span className="flex gap-1">
                 <button className="btn py-0.5 text-xs" onClick={() => act("remind", p.data.id)}>
