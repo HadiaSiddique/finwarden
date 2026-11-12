@@ -52,10 +52,10 @@ nextjs, typescript, paypal-payouts, paypal-invoicing, gemini, groq, vercel-ai-sd
 
 ## Testing instructions for judges
 
-Live demo: _URL_. Password: `finwarden-demo`. Sign in as Sara (owner) or Omar (second approver). Add a passkey when asked, then follow "Test it in 5 minutes" in the README. "Reset everything" in the Demo tab restores the starting data. PayPal sandbox only.
+Live demo: https://finwarden.vercel.app. Password: `finwarden-demo`. Sign in as Sara (owner) or Omar (second approver). Add a passkey when asked, then follow "Test it in 5 minutes" in the README. "Reset everything" in the Demo tab restores the starting data. PayPal sandbox only.
 
 ## Links
 
-- Repo: _GitHub URL_
+- Repo: https://github.com/HadiaSiddique/finwarden
 - Video: _YouTube URL_
 - Team: Hadia Siddiqui, _teammate name_

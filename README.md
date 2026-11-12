@@ -6,7 +6,7 @@ Finwarden helps small businesses and freelancers get paid, pay their people, and
 
 Built for the PayPal AI Hackathon 2026. PayPal **sandbox only**: no real money moves.
 
-- **Live demo:** _add the Vercel URL here_
+- **Live demo:** https://finwarden.vercel.app (password `finwarden-demo`)
 - **Video:** _add the YouTube link here_
 
 ## Core principle: the AI talks, the code decides
