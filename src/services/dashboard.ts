@@ -9,10 +9,20 @@ import { thresholds, toFlag, toIntent, toPayee } from "./repo";
 
 const DAY = 86_400_000;
 
+// Single-flight: concurrent first requests share one seeding run.
+let seeding: Promise<void> | null = null;
+
 export async function ensureSeeded() {
-  const db = await getDb();
-  const [{ count }] = await db.select({ count: sql<number>`count(*)::int` }).from(schema.users);
-  if (count === 0 && demoMode()) await resetAndSeed(db);
+  if (!demoMode()) return;
+  seeding ??= (async () => {
+    const db = await getDb();
+    const [{ count }] = await db.select({ count: sql<number>`count(*)::int` }).from(schema.users);
+    if (count === 0) await resetAndSeed(db);
+  })().catch((e) => {
+    seeding = null;
+    throw e;
+  });
+  return seeding;
 }
 
 export async function dashboardData() {
@@ -60,6 +70,43 @@ export async function dashboardData() {
 
   const owed = invoices.filter((i) => i.status === "SENT" || i.status === "PARTIALLY_PAID");
   const weekAhead = at.getTime() + 7 * DAY;
+
+  // 30-day cash forecast. Deterministic: invoices arrive on their due date (overdue ones assumed
+  // 5 days late from today), open payments leave in 2 days, payroll leaves on payday.
+  const START_BALANCE = 142_000; // demo PayPal balance
+  const dayIndex = (d: Date) => Math.max(0, Math.floor((d.getTime() - at.getTime()) / DAY));
+  const days = Array.from({ length: 31 }, (_, i) => ({ day: new Date(at.getTime() + i * DAY), inflow: 0, outflow: 0, balance: 0, events: [] as string[] }));
+  for (const inv of owed) {
+    const idx = Math.min(30, inv.daysOverdue > 0 ? 5 : dayIndex(inv.dueAt));
+    days[idx].inflow += inv.amount;
+    days[idx].events.push(`+${inv.client}`);
+  }
+  // Held payments (open red flags) won't go out, so they don't count against the balance.
+  for (const i of intents.filter((x) => (x.status === "PENDING_APPROVAL" || x.status === "APPROVED") && x.openRed === 0)) {
+    const idx = Math.min(30, i.scheduledFor ? dayIndex(i.scheduledFor) : 2);
+    days[idx].outflow += i.amount;
+    days[idx].events.push(`-${i.payeeName}`);
+  }
+  for (const p of payees.filter((x) => x.type === "employee" && x.paydayDayOfMonth && x.typicalAmount)) {
+    for (let i = 0; i <= 30; i++) {
+      if (days[i].day.getUTCDate() === p.paydayDayOfMonth) {
+        days[i].outflow += p.typicalAmount!.median;
+        days[i].events.push(`-${p.name} (salary)`);
+      }
+    }
+  }
+  let running = START_BALANCE;
+  for (const d of days) {
+    running += d.inflow - d.outflow;
+    d.balance = running;
+  }
+  const lowest = days.reduce((a, b) => (b.balance < a.balance ? b : a));
+  const overdue = owed.filter((i) => i.daysOverdue > 0).sort((a, b) => b.daysOverdue - a.daysOverdue);
+  const chase = overdue.slice(0, 3).map((i) => `${i.client} (${i.number}, ${i.daysOverdue} days late)`);
+
+  const heldIntents = intents.filter((i) => i.flags.some((f) => f.severity === "red"));
+  const protectedAmount = heldIntents.filter((i) => i.status !== "SENT").reduce((s, i) => s + i.amount, 0);
+
   return {
     now: at,
     demoMode: demoMode(),
@@ -72,6 +119,14 @@ export async function dashboardData() {
         .filter((i) => ["PENDING_APPROVAL", "APPROVED"].includes(i.status) && (!i.scheduledFor || i.scheduledFor.getTime() <= weekAhead))
         .reduce((s, i) => s + i.amount, 0),
       heldForReview: intents.filter((i) => i.status === "PENDING_APPROVAL" && i.openRed > 0).length,
+      protectedAmount,
+      scamsStopped: heldIntents.length,
+    },
+    forecast: {
+      startBalance: START_BALANCE,
+      days: days.map((d) => ({ day: d.day, inflow: d.inflow, outflow: d.outflow, balance: d.balance, events: d.events })),
+      lowest: { day: lowest.day, balance: lowest.balance },
+      chase,
     },
     invoices,
     intents,

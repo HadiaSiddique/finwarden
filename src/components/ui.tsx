@@ -1,4 +1,5 @@
 "use client";
+import { IconBadge, type IconName } from "./icons";
 
 export function Logo() {
   return (
@@ -34,12 +35,16 @@ export function StatusPill({ status }: { status: string }) {
   return <span className={`pill ${cls}`}>{label}</span>;
 }
 
-export function Kpi({ label, value, tone }: { label: string; value: string; tone?: "red" | "amber" | "green" }) {
+export function Kpi({ label, value, tone, icon, hint }: { label: string; value: string; tone?: "red" | "amber" | "green"; icon: IconName; hint?: string }) {
   const color = tone === "red" ? "text-red" : tone === "amber" ? "text-amber" : tone === "green" ? "text-green" : "text-text";
   return (
-    <div className="card px-4 py-3">
-      <div className="text-xs font-medium uppercase tracking-wide text-muted">{label}</div>
-      <div className={`mt-1 text-2xl font-semibold tabular-nums ${color}`}>{value}</div>
+    <div className="card card-hover flex items-start gap-3 px-4 py-4">
+      <IconBadge name={icon} tone={tone ?? "accent"} />
+      <div className="min-w-0">
+        <div className="text-xs font-medium uppercase tracking-wide text-muted">{label}</div>
+        <div className={`mt-0.5 text-2xl font-semibold tabular-nums ${color}`}>{value}</div>
+        {hint && <div className="mt-0.5 truncate text-xs text-muted">{hint}</div>}
+      </div>
     </div>
   );
 }

@@ -28,7 +28,7 @@ async function approveAs(intentId: string, userId: string) {
 
 describe("payment flow", () => {
   it("sends a clean payment after one passkey approval", async () => {
-    const { id, flags } = await createIntent({ payeeId: "acme", payeeName: "Acme Ltd", amount: 60_000, invoiceNumber: "A-77" }, sara);
+    const { id, flags } = await createIntent({ payeeId: "acme", payeeName: "Acme Ltd", amount: 9_000, invoiceNumber: "A-77" }, sara);
     expect(flags).toEqual([]);
     expect((await executeIntents([id], "sara")).refused).toHaveLength(1);
     await approveAs(id, "sara");
@@ -40,7 +40,7 @@ describe("payment flow", () => {
     expect((await executeIntents([id], "sara")).sent).toEqual([]);
   });
 
-  it("needs a second person above $1,000", async () => {
+  it("needs a second person at $500 or more", async () => {
     const { id } = await createIntent({ payeeId: "acme", payeeName: "Acme Ltd", amount: 120_000, invoiceNumber: "A-78" }, sara);
     await acknowledgeFlag((await intentStatusView(id))!.flags.find((f) => f.ruleId === "R9")?.id ?? "", "sara").catch(() => {});
     await approveAs(id, "sara");
@@ -54,7 +54,7 @@ describe("payment flow", () => {
     const newDetails = { method: "paypal_email" as const, receiver: "acme.payments@example.net", currency: "USD" };
     const { id: changeId, callbackContact } = await requestPayeeChange("acme", newDetails, "message", { type: "agent", id: "inbox" }, "We changed our bank details");
     expect(callbackContact).toBe("+1 415 555 0100");
-    const { id, flags } = await createIntent({ payeeId: "acme", payeeName: "Acme Ltd", amount: 60_000, payout: newDetails, invoiceNumber: "A-79" }, sara);
+    const { id, flags } = await createIntent({ payeeId: "acme", payeeName: "Acme Ltd", amount: 9_000, payout: newDetails, invoiceNumber: "A-79" }, sara);
     expect(flags.map((f) => f.ruleId)).toContain("R1");
     await expect(approveAs(id, "sara")).rejects.toThrow(/red flags/);
     await expect(resolveFlag((await intentStatusView(id))!.flags[0].id, "sara", "I trust this email")).rejects.toThrow(/contact on file/);
@@ -81,16 +81,16 @@ describe("payment flow", () => {
   });
 
   it("voids approvals if the amount is changed behind the app's back", async () => {
-    const { id } = await createIntent({ payeeId: "printhub", payeeName: "PrintHub", amount: 20_000 }, sara);
+    const { id } = await createIntent({ payeeId: "printhub", payeeName: "PrintHub", amount: 5_000 }, sara);
     await approveAs(id, "sara");
     await db.update(schema.paymentIntents).set({ amount: 99_000 }).where(sql`id = ${id}`);
     const res = await executeIntents([id], "sara");
     expect(res.sent).toEqual([]);
-    expect(res.refused[0].reasons.join(" ")).toMatch(/Needs 1 passkey approval/);
+    expect(res.refused[0].reasons.join(" ")).toMatch(/passkey approval\(s\) bound to this exact payment; has 0/);
   });
 
   it("fails closed when PayPal errors", async () => {
-    const { id } = await createIntent({ payeeId: "printhub", payeeName: "PrintHub", amount: 20_000 }, sara);
+    const { id } = await createIntent({ payeeId: "printhub", payeeName: "PrintHub", amount: 5_000 }, sara);
     await approveAs(id, "sara");
     const failing = vi.fn().mockRejectedValue(new Error("PayPal is down"));
     const res = await executeIntents([id], "sara", failing);
@@ -101,7 +101,7 @@ describe("payment flow", () => {
 
 describe("audit log", () => {
   it("is append-only", async () => {
-    await createIntent({ payeeId: "printhub", payeeName: "PrintHub", amount: 20_000 }, sara);
+    await createIntent({ payeeId: "printhub", payeeName: "PrintHub", amount: 5_000 }, sara);
     await expect(db.execute(sql`UPDATE audit_events SET why = 'edited'`)).rejects.toThrow();
     await expect(db.execute(sql`DELETE FROM audit_events`)).rejects.toThrow();
     const rows = await db.select().from(schema.auditEvents);

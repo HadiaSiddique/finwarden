@@ -1,20 +1,19 @@
 "use client";
 import { useState } from "react";
 import { api } from "./api";
-
 import type { Tab } from "./Dashboard";
+import { Icon, IconBadge, type IconName } from "./icons";
 
-const INBOX_SCENARIOS = new Set(["paypal_invoice_scam", "supplier_new_number"]);
-
-const SCENARIOS: [string, string, string][] = [
-  ["bank_change", "Acme: \"we changed our bank details\"", "A supplier email asks to redirect payments. Finwarden holds it until you call Acme on the number you already have."],
-  ["ceo_request", "Urgent \"CEO\" request", "Pressure, secrecy and a brand-new account. Blocked: approval only works in the app with a passkey."],
-  ["paypal_invoice_scam", "PayPal invoice with a phone number", "A real-looking PayPal invoice for a purchase Sara never made, with a scammer's \"call to cancel\" number."],
-  ["supplier_new_number", "\"PrintHub\" has a new number", "A message claiming to be PrintHub asks Sara to call a number that isn't on file."],
-  ["lookalike_invoice", "Invoice from \"Acrne Ltd\"", "A name that looks like your supplier Acme Ltd at a glance."],
-  ["duplicate_invoice", "Same invoice twice", "PrintHub's invoice re-sent with a letter added to the number."],
-  ["split_payments", "Payments split under the limit", "Three $950 payments that dodge the two-person rule."],
-  ["friday_payouts", "Friday payout run", "Normal payments to freelancers and suppliers, ready to approve and send through PayPal Payouts."],
+type Tone = "red" | "amber" | "green" | "blue";
+const SCENARIOS: { key: string; title: string; desc: string; icon: IconName; tone: Tone; tag: string; goes: Tab }[] = [
+  { key: "bank_change", title: "“We changed our bank details”", desc: "Acme asks to redirect its $140 payment. Held until Sara calls Acme on the number already on file.", icon: "alert", tone: "red", tag: "Business email compromise", goes: "Review" },
+  { key: "ceo_request", title: "Urgent “CEO” request", desc: "“Pay $2,400 today, keep it quiet.” Pressure, secrecy and a brand-new account: blocked.", icon: "zap", tone: "red", tag: "Impersonation", goes: "Review" },
+  { key: "paypal_invoice_scam", title: "PayPal invoice with a phone number", desc: "A real-looking $499.99 invoice for software Sara never bought, with a “call to cancel” number.", icon: "phone", tone: "red", tag: "Invoice phishing", goes: "Scam inbox" },
+  { key: "supplier_new_number", title: "Supplier with a “new number”", desc: "A message claiming to be PrintHub asks Sara to call a number that isn't on file.", icon: "phone", tone: "amber", tag: "Contact mismatch", goes: "Scam inbox" },
+  { key: "lookalike_invoice", title: "Invoice from “Acrne Ltd”", desc: "$135 to a name that reads as “Acme” at a glance. Caught by the lookalike check.", icon: "copy", tone: "amber", tag: "Lookalike supplier", goes: "Review" },
+  { key: "duplicate_invoice", title: "Same invoice twice", desc: "PrintHub's $62 invoice comes back as PH-8812-A. Blocked as an altered copy.", icon: "file", tone: "amber", tag: "Duplicate invoice", goes: "Review" },
+  { key: "split_payments", title: "Split to dodge approval", desc: "Three $190 payments to one person: each under the $500 two-person limit, together over it.", icon: "split", tone: "amber", tag: "Split payments", goes: "Review" },
+  { key: "friday_payouts", title: "Friday payout run", desc: "Hamza $150, PrintHub $48, Lina $90. Clean payments ready to approve and send through PayPal.", icon: "send", tone: "green", tag: "Normal day", goes: "Review" },
 ];
 
 export default function DemoPanel({ refresh, onReset, onRan }: { refresh: () => Promise<void>; onReset: () => void; onRan: (tab: Tab) => void }) {
@@ -39,13 +38,28 @@ export default function DemoPanel({ refresh, onReset, onRan }: { refresh: () => 
     <div className="grid gap-6 lg:grid-cols-[1fr_300px]">
       <section>
         <h2 className="text-lg font-semibold">Sara&apos;s day</h2>
-        <p className="mt-1 text-sm text-muted">Each scenario sends a realistic event through the same checks a real one would hit.</p>
+        <p className="mt-1 text-sm text-muted">Each scenario sends a realistic event through the same checks a real one would hit. Scam patterns are taken from the FBI IC3 2025 report, PayPal&apos;s scam list and real cases.</p>
         <div className="mt-4 grid gap-3 sm:grid-cols-2">
-          {SCENARIOS.map(([key, title, desc]) => (
-            <button key={key} className="card p-4 text-left transition hover:border-accent disabled:opacity-60" disabled={!!busy} onClick={() => run(key, { action: "scenario", name: key }, () => onRan(INBOX_SCENARIOS.has(key) ? "Scam inbox" : "Review"))}>
-              <div className="font-medium">{title}</div>
-              <div className="mt-1 text-sm text-muted">{desc}</div>
-              <div className="mt-2 text-xs font-medium text-accent">{busy === key ? "Running…" : "Run scenario →"}</div>
+          {SCENARIOS.map((s, i) => (
+            <button
+              key={s.key}
+              className="card card-hover fade-up group flex flex-col gap-3 p-4 text-left disabled:opacity-60"
+              style={{ animationDelay: `${i * 40}ms` }}
+              disabled={!!busy}
+              onClick={() => run(s.key, { action: "scenario", name: s.key }, () => onRan(s.goes))}
+            >
+              <div className="flex items-start gap-3">
+                <IconBadge name={s.icon} tone={s.tone} />
+                <div className="min-w-0">
+                  <span className={`pill pill-${s.tone === "green" ? "green" : s.tone === "red" ? "red" : "amber"}`}>{s.tag}</span>
+                  <div className="mt-1 font-semibold">{s.title}</div>
+                </div>
+              </div>
+              <p className="text-sm text-muted">{s.desc}</p>
+              <span className="mt-auto flex items-center gap-1 text-sm font-medium text-accent">
+                {busy === s.key ? "Running…" : "Run scenario"}
+                <Icon name="arrowRight" size={14} className="transition group-hover:translate-x-0.5" />
+              </span>
             </button>
           ))}
         </div>
@@ -53,14 +67,18 @@ export default function DemoPanel({ refresh, onReset, onRan }: { refresh: () => 
       </section>
       <aside className="space-y-3">
         <div className="card p-4">
-          <h3 className="font-semibold">Demo clock</h3>
-          <p className="mt-1 text-sm text-muted">Skip ahead to show cooling-off periods ending. Every jump is logged.</p>
+          <div className="flex items-center gap-2 font-semibold">
+            <Icon name="clock" size={16} className="text-accent" /> Demo clock
+          </div>
+          <p className="mt-1 text-sm text-muted">New or changed payees wait 24 hours. Skip ahead to see the hold end. Every jump is logged.</p>
           <button className="btn mt-3 w-full justify-center" disabled={!!busy} onClick={() => run("clock", { action: "clock", hours: 24 })}>
             Fast-forward 24 hours
           </button>
         </div>
         <div className="card p-4">
-          <h3 className="font-semibold">Reset demo</h3>
+          <div className="flex items-center gap-2 font-semibold">
+            <Icon name="refresh" size={16} className="text-red" /> Reset demo
+          </div>
           <p className="mt-1 text-sm text-muted">Restores Sara&apos;s starting data. Passkeys are cleared, so you&apos;ll sign in again.</p>
           <button className="btn btn-danger mt-3 w-full justify-center" disabled={!!busy} onClick={() => confirm("Reset all demo data?") && run("reset", { action: "reset" }, onReset)}>
             Reset everything

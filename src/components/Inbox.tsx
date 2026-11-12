@@ -28,11 +28,27 @@ const VERDICT: Record<string, [string, string, string]> = {
   safe: ["No warning signs", "pill-green", "Nothing matched known scam patterns."],
 };
 
-const EXAMPLES = [
-  "PayPal Invoice: Geek Squad annual plan $389.00. If you did not authorise this, call +1 877 555 0123 within 24 hours.",
-  "Hi Sara, Acme Ltd here. Please send future payments to accounts@acme-ltd.example, our bank changed.",
-  "سارہ بول رہی ہوں، میٹنگ میں ہوں۔ فوراً اس نئے اکاؤنٹ میں 8,000 ڈالر بھیج دیں، کسی کو مت بتائیں۔",
-  "PayPal: You received $450.00 USD from Bright Bakery. Log in to paypal.com to see details.",
+const EXAMPLES: { label: string; tag: string; text: string }[] = [
+  {
+    label: "Fake PayPal invoice",
+    tag: "English",
+    text: "PayPal Invoice #INV2-8KD3\nGeek Squad annual protection plan: $389.00 USD\nThis amount will be charged to your PayPal account today. If you did not authorise this purchase, call our billing team on +1 877 555 0123 within 24 hours to cancel.",
+  },
+  {
+    label: "Supplier bank change",
+    tag: "English",
+    text: "Hi Sara,\nAcme Ltd here. Our bank has changed, so please send this month's payment for INV-3307 ($140) to accounts@acme-ltd.example from now on.\nThanks,\nAcme Accounts",
+  },
+  {
+    label: "Urgent boss request",
+    tag: "Urdu",
+    text: "سارہ بول رہی ہوں، میٹنگ میں ہوں۔ فوراً اس نئے اکاؤنٹ میں 1,800 ڈالر بھیج دیں، کسی کو مت بتائیں۔",
+  },
+  {
+    label: "Genuine PayPal notice",
+    tag: "English",
+    text: "PayPal: You received $180.00 USD from Bright Bakery for invoice SS-1042. Log in to paypal.com to see details.",
+  },
 ];
 
 export default function Inbox({ refreshKey }: { refreshKey: number }) {
@@ -69,17 +85,20 @@ export default function Inbox({ refreshKey }: { refreshKey: number }) {
       <section>
         <h2 className="text-lg font-semibold">Scam inbox</h2>
         <p className="mt-1 text-sm text-muted">Paste any invoice, money request or &ldquo;you&apos;ve been paid&rdquo; email, in any language.</p>
-        <textarea className="input mt-3 min-h-36 font-mono text-sm" value={text} onChange={(e) => setText(e.target.value)} placeholder="Paste the message here…" />
+        <div className="mt-3 grid grid-cols-2 gap-2 lg:grid-cols-4">
+          {EXAMPLES.map((ex) => (
+            <button key={ex.label} className={`card card-hover p-3 text-left ${text === ex.text ? "border-accent" : ""}`} onClick={() => setText(ex.text)}>
+              <div className="text-sm font-medium">{ex.label}</div>
+              <div className="mt-0.5 text-xs text-muted">Sample · {ex.tag}</div>
+            </button>
+          ))}
+        </div>
+        <textarea className="input mt-3 min-h-40 text-sm" value={text} onChange={(e) => setText(e.target.value)} placeholder="Paste the message here, or pick a sample above…" />
         <div className="mt-2 flex flex-wrap items-center gap-2">
           <button className="btn btn-primary" disabled={busy || text.trim().length < 10} onClick={check}>
             {busy ? "Checking…" : "Check message"}
           </button>
-          <span className="text-xs text-muted">Try:</span>
-          {EXAMPLES.map((ex, i) => (
-            <button key={i} className="btn text-xs" onClick={() => setText(ex)}>
-              Example {i + 1}
-            </button>
-          ))}
+          <span className="text-xs text-muted">The AI reads it; Finwarden&apos;s rules give the verdict.</span>
         </div>
         {error && <p className="mt-3 text-sm text-red">{error}</p>}
 

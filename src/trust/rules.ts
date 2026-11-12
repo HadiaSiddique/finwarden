@@ -123,7 +123,7 @@ export function r3Duplicate(ctx: RuleContext): Flag | null {
         return {
           ruleId: "R3",
           severity: "amber",
-          why: `${intent.payeeName} was already sent ${money(o.amount, o.currency)} ${Math.max(0, Math.round(ageDays))} day(s) ago. Check this isn't a double payment.`,
+          why: `${intent.payeeName} was already sent ${money(o.amount, o.currency)} ${ageDays < 1 ? "earlier today" : `${Math.round(ageDays)} day${Math.round(ageDays) === 1 ? "" : "s"} ago`}. Check this isn't a double payment.`,
           evidence: { possibleDuplicateOf: o.id },
         };
       }

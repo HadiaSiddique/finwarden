@@ -57,7 +57,8 @@ export function thresholds(): Thresholds {
   const hours = Number(process.env.COOLING_OFF_HOURS);
   return {
     ...DEFAULT_THRESHOLDS,
-    ...(usd > 0 ? { twoApproverMinor: Math.round(usd * 100) } : {}),
+    // A small studio: payments of $500 or more need a second person.
+    twoApproverMinor: usd > 0 ? Math.round(usd * 100) : 50_000,
     ...(hours > 0 ? { coolingOffHours: hours } : {}),
   };
 }
